@@ -1,16 +1,21 @@
 <template>
 	<view class="content">
-	
-			首页
-		</view>
+		<!-- #ifdef MP-WEIXIN -->
+		<searchInput></searchInput>
+		<!-- #endif -->
+		
+	</view>
 	</view>
 </template>
 
 <script>
+	import searchInput from '../../components/search-input/search-input.vue'
 	export default {
+		components: {
+			searchInput,
+		},
 		data() {
-			return {
-				}
+			return {}
 		},
 		onLoad() {
 
@@ -22,5 +27,5 @@
 </script>
 
 <style>
-	
+
 </style>
