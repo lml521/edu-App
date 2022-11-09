@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchInput = function searchInput() {__webpack_require__.e(/*! require.ensure | components/search-input/search-input */ "components/search-input/search-input").then((function () {return resolve(__webpack_require__(/*! ../../components/search-input/search-input.vue */ 43));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchInput = function searchInput() {__webpack_require__.e(/*! require.ensure | components/search-input/search-input */ "components/search-input/search-input").then((function () {return resolve(__webpack_require__(/*! @/components/search-input/search-input.vue */ 42));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var categoryBox = function categoryBox() {__webpack_require__.e(/*! require.ensure | components/category-box/category-box */ "components/category-box/category-box").then((function () {return resolve(__webpack_require__(/*! @/components/category-box/category-box.vue */ 49));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Banner = function Banner() {__webpack_require__.e(/*! require.ensure | components/banner/banner */ "components/banner/banner").then((function () {return resolve(__webpack_require__(/*! @/components/banner/banner.vue */ 56));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -148,17 +148,62 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-{
+
+
+
+
+
+
+
+//轮播图
+var _default = {
   components: {
-    searchInput: searchInput },
-
+    searchInput: searchInput, //小程序中搜索
+    categoryBox: categoryBox, //分类模块
+    Banner: Banner //轮播图
+  },
   data: function data() {
     return {};
   },
   onLoad: function onLoad() {
 
+
+
+
   },
-  methods: {} };exports.default = _default;
+  methods: {
+
+    // 搜索框滚动数据
+    placeholderData: function placeholderData() {
+      //获取当前页面实例, 仅 App 支持写在APP-PLUS条件编译下
+      var webview = this.$scope.$getAppWebview();
+      // webview.setStyle() 接收WebviewStyles对象改变样式
+      // 修改导航输入框提示信息
+      var arr = ['APP · 微信小程序', 'Java · SprinBoot', 'SpringCloud·SpringSecurity', 'Vue · React'];
+
+      // 执行马上调用，如果在定时器自调用会报错，所以第一次放外面
+      var i = 0;
+      webview.setStyle({
+        'titleNView': {
+          "searchInput": {
+            "placeholder": arr[i] } } });
+
+
+
+
+      setInterval(function () {
+        // 定时循环显示每个元素，3最后一个元素，又从0第1个元素开始
+        i = i < 3 ? ++i : 0;
+        webview.setStyle({
+          'titleNView': {
+            "searchInput": {
+              "placeholder": arr[i] } } });
+
+
+
+      }, 3000); // () 自调用第一次立即执行，但是ios会报错，所以在定时器外面执行第一次
+
+    } } };exports.default = _default;
 
 /***/ })
 ],[[12,"common/runtime","common/vendor"]]]);

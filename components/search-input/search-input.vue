@@ -1,9 +1,7 @@
 <template>
-	<view>
-		<view class="search-box">
-			<input class="search-input" type="text" placeholder="搜索你想要的内容" disabled>
-
-		</view>
+	<!-- 搜索 -->
+	<view class="search-box">
+		<input class="search-input" type="text" placeholder="搜索你想要的内容" disabled>
 	</view>
 </template>
 

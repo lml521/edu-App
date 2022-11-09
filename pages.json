@@ -8,7 +8,7 @@
 				"app-plus": {
 					// "bounce": "none", //禁止回弹
 					"titleNView": {
-						// "type": "transparent",
+						"type": "transparent",
 						
 						"searchInput": { // 搜索框
 							"align": "center",
