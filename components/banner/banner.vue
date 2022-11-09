@@ -1,20 +1,19 @@
 <template>
 	<!-- 轮播图 -->
 	<view class="banner-box">
-		{{bannerBackground}}
 		<view class="bannerBg" 
 		:style="{'background-image':`linear-gradient( ${bannerBackground || '#345dc2'} 50%, #F8F9FB)`}"></view>
 		<swiper class="swiper" 
 		:indicator-dots="true" 
 		:autoplay="true" 
-		:interval="3000" 
+		:interval="3000"
 		:duration="1000"
 		indicator-color="rgba(255,255,255,.5)"
 		indicator-active-color="#fff"
 		circular
 		@change="handelChangeSwiper"
 		>
-		<swiper-item class="swiper-item" v-for="item in bannerList">
+		<swiper-item class="swiper-item" v-for="item in bannerList" :key="item.id">
 			<img class="swiper-img"
 			 :src="item.imageUrl" />
 		</swiper-item>

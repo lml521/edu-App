@@ -34,6 +34,7 @@
   width: 160rpx;
   height: 70rpx;
   background-color: pink;
+  background-color: #F8F9FB;
   line-height: 70rpx;
   text-align: center;
   font-size: 26rpx;

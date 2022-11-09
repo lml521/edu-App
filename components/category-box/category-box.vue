@@ -65,7 +65,7 @@
 			width: 160rpx;
 			height: 70rpx;
 			background-color: pink;
-			// background-color: $mxg-color-grey;
+			background-color: $color-grey;
 			line-height: 70rpx;
 			text-align: center;
 			font-size: 26rpx;
