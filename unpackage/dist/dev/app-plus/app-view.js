@@ -1337,11 +1337,7 @@ var render = function() {
             [
               _c("img", {
                 staticClass: _vm._$g("4-" + $30, "sc"),
-                attrs: {
-                  src: _vm._$g("4-" + $30, "a-src"),
-                  alt: "",
-                  _i: "4-" + $30
-                }
+                attrs: { src: _vm._$g("4-" + $30, "a-src"), _i: "4-" + $30 }
               })
             ],
             1

@@ -16,7 +16,7 @@
 		>
 		<swiper-item class="swiper-item" v-for="item in bannerList">
 			<img class="swiper-img"
-			 :src="item.imageUrl" alt="">
+			 :src="item.imageUrl" />
 		</swiper-item>
 		</swiper>
 
@@ -62,10 +62,8 @@
 		methods:{
 				// 改变轮播图
 			handelChangeSwiper(e){
-				console.log(e.detail.current)
 				this.current=e.detail.current
 				this.bannerBackground=this.bannerList[this.current].background
-				console.log(this.bannerBackground)
 			}
 		}
 	}

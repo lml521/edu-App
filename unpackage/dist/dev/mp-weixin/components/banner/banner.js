@@ -178,10 +178,8 @@ var _default2 =
   methods: {
     // 改变轮播图
     handelChangeSwiper: function handelChangeSwiper(e) {
-      console.log(e.detail.current);
       this.current = e.detail.current;
       this.bannerBackground = this.bannerList[this.current].background;
-      console.log(this.bannerBackground);
     } } };exports.default = _default2;
 
 /***/ }),
