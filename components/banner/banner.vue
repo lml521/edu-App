@@ -13,7 +13,8 @@
 		circular
 		@change="handelChangeSwiper"
 		>
-		<swiper-item class="swiper-item" v-for="item in bannerList" :key="item.id">
+		<swiper-item class="swiper-item" 
+		v-for="item in bannerList" :key="item.id">
 			<img class="swiper-img"
 			 :src="item.imageUrl" />
 		</swiper-item>

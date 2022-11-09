@@ -4,25 +4,39 @@
 		<!-- #ifdef MP-WEIXIN -->
 		<searchInput></searchInput>
 		<!-- #endif -->
-		
+
 		<!-- 轮播图 -->
 		<Banner></Banner>
 
 		<!-- 分类模块 -->
 		<categoryBox></categoryBox>
+
+
+		<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
+		<view class="list-container">
+			<!-- 热门推荐 -->
+			<swiperCourse>
+				
+			</swiperCourse>
+			
+		</view>
 	</view>
 	</view>
 </template>
 
 <script>
-	import searchInput from '@/components/search-input/search-input.vue';//小程序中搜索
-	import categoryBox from '@/components/category-box/category-box.vue';//分类模块
-	import Banner from '@/components/banner/banner.vue';//轮播图
+	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
+	import categoryBox from '@/components/category-box/category-box.vue'; //分类模块
+	import Banner from '@/components/banner/banner.vue'; //轮播图
+	
+	import swiperCourse from '@/pages/index/components/swiperCourse.vue';//热门推荐
+	
 	export default {
 		components: {
-			searchInput,//小程序中搜索
-			categoryBox,//分类模块
-			Banner,//轮播图
+			searchInput, //小程序中搜索
+			categoryBox, //分类模块
+			Banner, //轮播图
+			swiperCourse,//热门推荐
 		},
 		data() {
 			return {}
@@ -70,6 +84,10 @@
 	}
 </script>
 
-<style>
-
+<style lang="scss">
+	
+.list-container{
+	margin-top: 50rpx;
+	padding: 0 30rpx;
+}
 </style>

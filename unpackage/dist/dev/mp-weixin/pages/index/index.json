@@ -4,6 +4,7 @@
   "usingComponents": {
     "search-input": "/components/search-input/search-input",
     "category-box": "/components/category-box/category-box",
-    "banner": "/components/banner/banner"
+    "banner": "/components/banner/banner",
+    "swiper-course": "/pages/index/components/swiperCourse"
   }
 }

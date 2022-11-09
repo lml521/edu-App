@@ -1,0 +1,1 @@
+<view><list-box vue-id="5ef067c0-1" bind:__l="__l" vue-slots="{{['default']}}"><block wx:for="{{8}}" wx:for-item="item" wx:for-index="__i0__"><course-item vue-id="{{('5ef067c0-2-'+__i0__)+','+('5ef067c0-1')}}" bind:__l="__l"></course-item></block></list-box></view>
