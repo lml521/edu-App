@@ -1,21 +1,22 @@
 <template>
+	<!-- 每一个盒子 -->
 	<view class="item-box">
 		<view class="left">
-			<img src="/static/images/banner1.jpg" alt="">
-			<text class="item-time">04:34:58</text>
+			<img :src="item.mainImage" alt="">
+			<text class="item-time">{{item.totalTime}}</text>
 		</view>
-
 		<view class="right">
-			<h2 class="right-title">政它方西京并文布各线平今政取号能要。</h2>
+			<h2 class="right-title text-ellipsis">{{item.title}}</h2>
 
 			<view class="info">
 				<view class="nickname">
 					<i class="iconfont icon-laoshi2"></i>
-					宋刚
+					{{item.nickName}}
 				</view>
 				<view class="count">
-					<text class="money">免费</text>
-					<text class="iconfont">396人在学</text>
+					<text v-if="isFree" class="money">免费</text>
+					<text v-else class="money">{{item.priceDiscount||item.priceOriginal}}</text>
+					<text class="iconfont">{{item.studyTotal}} 人在学</text>
 				</view>
 			</view>
 
@@ -27,6 +28,25 @@
 <script>
 	export default {
 		name: "course-item",
+		props: {
+
+			item: {
+				type: Object,
+				default: () => {
+					return {
+						id: 1,
+						mainImage: 'http://10.idqqimg.com/qqcourse_logo_ng/ajNVdqHZLLAWb3qFGBhykjmcTvz9CWmwib2Qj7c3Vxjia4y5fgSoNdrMYIdH11Dl1OCraibA7u0mts/600',
+						totalTime: '00:59:08',
+						title: 'SpringBoot项目实战',
+						nickName: '小谷老师',
+						isFree: 0, //是否免费：0收费，1免费
+						priceOriginal: 999, // 原价
+						priceDiscount: 699.9, // 优惠价
+						studyTotal: 899
+					}
+				}
+			}
+		},
 		data() {
 			return {
 

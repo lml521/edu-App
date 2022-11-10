@@ -9,15 +9,13 @@
 		<Banner></Banner>
 
 		<!-- 分类模块 -->
-		<categoryBox></categoryBox>
+		<categoryBox ></categoryBox>
 
 
 		<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
 		<view class="list-container">
 			<!-- 热门推荐 -->
-			<swiperCourse>
-				
-			</swiperCourse>
+			<swiperCourse name="热门推荐" word="HOT"></swiperCourse>
 			
 		</view>
 	</view>

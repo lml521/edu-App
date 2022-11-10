@@ -4,8 +4,8 @@
 		<!-- 标题 -->
 		<view class="title">
 			<view class="center">
-				<text class="name">热门推荐</text>
-				<text class="word">HOT</text>
+				<text class="name">{{name}}</text>
+				<text class="word">{{word}}</text>
 			</view>
 			<view class="all ">
 				<text>全部</text>
@@ -18,6 +18,17 @@
 
 <script>
 	export default {
+			
+		props:{
+			name:{
+				type:String,
+				default:"热门推荐"
+			},
+			word:{
+				type:String,
+				default:"HOT"
+			}
+		},
 		data() {
 			return {
 

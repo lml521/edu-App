@@ -1,23 +1,69 @@
 <template>
 	<view>
 		<!-- 热门推荐大盒子 -->
-		<listBox>
-			<!-- 盒子中的每一项 -->
-			<courseItem v-for="item in 8"></courseItem>
+		<listBox :name="name" :word="word">
+			<!-- 盒子中的每一项  -->
+			<swiper :style="{height:`${200*rows}rpx`}">
+				<swiper-item v-for="i in column" :key="i">
+					<view class="swiper-item">
+						<courseItem :item="item" v-for="(item,index) in courseData.slice((i-1)*rows,i*rows)" 
+						:key="item.id"></courseItem>
+					</view>
+				</swiper-item>
+				
+			</swiper>
+			
 		</listBox>
 	</view>
 </template>
 <script>
-	import listBox from './list-box.vue';// 热门推荐大盒子	
-	import courseItem from '@/components/course-item/course-item.vue';//盒子中每一项
+	import listBox from './list-box.vue'; // 热门推荐大盒子	
+	import courseItem from '@/components/course-item/course-item.vue'; //盒子中每一项
+	import courseData from '@/mock/courseData.js'
 	export default {
-		components:{
+		components: {
 			listBox,
 			courseItem,
 		},
+
+
+		props: {
+			// 总数据
+			courseData: {
+				type: Array,
+				default: courseData
+			},
+			// title 名称
+			name:{
+				type:String,
+				default:"热门推荐"	
+			},
+			word:{
+				type:String,
+				default:null,
+			},
+			// 展示 轮播几列
+			column: {
+				type: Number,
+				default: 3,
+			},
+			// 一列展示几个	
+			rows: {
+				type: Number,
+				default: 5,
+			}
+
+
+
+
+
+
+
+
+		},
 		data() {
 			return {
-				
+
 			};
 		}
 	}
