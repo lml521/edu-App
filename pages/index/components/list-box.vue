@@ -39,6 +39,7 @@
 
 <style lang="scss">
 	.list-box {
+		margin-top: 50rpx;
 		.title {
 			width: 100%;
 			display: flex;

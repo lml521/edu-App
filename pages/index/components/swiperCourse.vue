@@ -1,8 +1,8 @@
 <template>
-	<view>
+	
 		<!-- 热门推荐大盒子 -->
-		<listBox :name="name" :word="word">
-			<!-- 盒子中的每一项  -->
+		 <listBox :name="name" :word="word">
+			
 			<swiper :style="{height:`${200*rows}rpx`}">
 				<swiper-item v-for="i in column" :key="i">
 					<view class="swiper-item">
@@ -13,8 +13,8 @@
 				
 			</swiper>
 			
-		</listBox>
-	</view>
+		</listBox> 
+	
 </template>
 <script>
 	import listBox from './list-box.vue'; // 热门推荐大盒子	
@@ -45,7 +45,7 @@
 			// 展示 轮播几列
 			column: {
 				type: Number,
-				default: 3,
+				default: 2,
 			},
 			// 一列展示几个	
 			rows: {

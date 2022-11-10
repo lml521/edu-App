@@ -1,6 +1,6 @@
 <template>
 	<!-- 每一个盒子 -->
-	<view class="item-box">
+	<view class="item-box" :class="{column : isColumn}">
 		<view class="left">
 			<img :src="item.mainImage" alt="">
 			<text class="item-time">{{item.totalTime}}</text>
@@ -29,6 +29,11 @@
 	export default {
 		name: "course-item",
 		props: {
+
+			isColumn: {
+				type: Boolean,
+				default: false
+			},
 
 			item: {
 				type: Object,
@@ -133,10 +138,6 @@
 					}
 				}
 			}
-
-
-
-
 		}
 	}
 </style>
