@@ -30,7 +30,7 @@
 			// 总数据
 			courseData: {
 				type: Array,
-				default: courseData
+				default:() =>courseData
 			},
 			},
 		data() {

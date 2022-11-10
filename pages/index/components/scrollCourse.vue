@@ -1,6 +1,5 @@
 <template>
 	<listBox :name="name" :word="word">
-
 		<scroll-view scroll-x class="list-scroll noScorll">
 			<view class="list-scroll-view" v-for="item in courseData" :key="item.id">
 				<courseItem :isColumn="true" :item="item"></courseItem>
@@ -31,7 +30,7 @@
 
 			courseData: {
 				type: Array,
-				default: courseData
+				default:() => courseData
 			}
 		},
 		data() {

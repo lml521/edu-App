@@ -14,7 +14,7 @@
 					{{item.nickName}}
 				</view>
 				<view class="count">
-					<text v-if="isFree" class="money">免费</text>
+					<text v-if="item.isFree" class="money">免费</text>
 					<text v-else class="money">{{item.priceDiscount||item.priceOriginal}}</text>
 					<text class="iconfont">{{item.studyTotal}} 人在学</text>
 				</view>

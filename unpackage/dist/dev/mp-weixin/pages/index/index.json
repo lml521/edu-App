@@ -5,6 +5,8 @@
     "search-input": "/components/search-input/search-input",
     "category-box": "/components/category-box/category-box",
     "banner": "/components/banner/banner",
-    "swiper-course": "/pages/index/components/swiperCourse"
+    "swiper-course": "/pages/index/components/swiperCourse",
+    "scroll-course": "/pages/index/components/scrollCourse",
+    "list-course": "/pages/index/components/list-course"
   }
 }

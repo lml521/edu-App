@@ -9,21 +9,21 @@
 		<Banner></Banner>
 
 		<!-- 分类模块 -->
-		<categoryBox ></categoryBox>
+		<categoryBox></categoryBox>
 
 
 		<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
 		<view class="list-container">
 			<!-- 热门推荐 -->
 			<swiperCourse name="热门推荐" word="HOT"></swiperCourse>
-			
+
 			<!-- 近期上新 -->
 			<scrollCourse name="近期上新" word="NEW"></scrollCourse>
-			
+
 			<!-- 免费精选 -->
 			<swiperCourse name="免费精选" word="FREE"></swiperCourse>
-			
-			<!-- 付费精品 -->
+
+			<!--付费精品 -->
 			<listCourse name="付费精选" word="NICE"></listCourse>
 		</view>
 	</view>
@@ -34,27 +34,40 @@
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
 	import categoryBox from '@/components/category-box/category-box.vue'; //分类模块
 	import Banner from '@/components/banner/banner.vue'; //轮播图
-	import swiperCourse from '@/pages/index/components/swiperCourse.vue';//热门推荐
-	import scrollCourse from '@/pages/index/components/scrollCourse.vue';//近期上新
-	
-	import listCourse  from "@/pages/index/components/list-course.vue"
+	import swiperCourse from '@/pages/index/components/swiperCourse.vue'; //热门推荐
+	import scrollCourse from '@/pages/index/components/scrollCourse.vue'; //近期上新
+	import listCourse from "@/pages/index/components/list-course.vue"; //付费精品
+
+	import {getBannerList} from '@/api/index.js'
 	export default {
 		components: {
 			searchInput, //小程序中搜索
 			categoryBox, //分类模块
 			Banner, //轮播图
-			swiperCourse,//热门推荐
-			scrollCourse,//近期上新
+			swiperCourse, //热门推荐
+			scrollCourse, //近期上新
 			listCourse,
 		},
 		data() {
 			return {}
 		},
+
+		// app 扫码 
+		onNavigationBarButtonTap: function(e) {
+			const index = e.index
+			if (index === 0) {
+				this.handleOpenScanCode()
+			}
+		},
+
+		
 		onLoad() {
 			// #ifdef APP-PLUS
 			// 搜索框提示信息，只在APP中有
 			this.placeholderData()
 			// #endif
+			
+			this.getBanner()
 		},
 		methods: {
 
@@ -87,15 +100,38 @@
 						}
 					})
 				}, 3000) // () 自调用第一次立即执行，但是ios会报错，所以在定时器外面执行第一次
+			},
+
+
+			// 扫码
+
+			async handleOpenScanCode() {
+				try {
+					let res = await uni.scanCode()
+					console.log(res[1].result, 'res');
+					uni.navigateTo({
+						url: `/pages/public/web-view?url=${res[1].result}`
+					})
+				} catch (e) {
+					//TODO handle the exception
+					console.log(e);
+				}
+
 
 			},
+
+
+			async getBanner() {
+				let res = await getBannerList()
+			console.log(res,'res')
+
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	
-.list-container{
-	padding: 0 30rpx;
-}
+	.list-container {
+		padding: 0 30rpx;
+	}
 </style>

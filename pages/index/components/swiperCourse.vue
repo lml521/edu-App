@@ -31,7 +31,7 @@
 			// 总数据
 			courseData: {
 				type: Array,
-				default: courseData
+				default: () =>courseData
 			},
 			// title 名称
 			name:{

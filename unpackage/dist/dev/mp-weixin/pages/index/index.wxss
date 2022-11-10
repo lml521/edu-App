@@ -25,7 +25,6 @@
 /* 透明度 */
 /* 文章场景相关 */
 .list-container {
-  margin-top: 50rpx;
   padding: 0 30rpx;
 }
 
