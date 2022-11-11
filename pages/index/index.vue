@@ -8,23 +8,33 @@
 		<!-- 轮播图 -->
 		<Banner :bannerList="bannerList"></Banner>
 
-		<!-- 分类模块 -->
-		<categoryBox :categoryList="categoryList"></categoryBox>
+		<mescroll-body 
+		ref="mescrollRef"
+		@init="mescrollInit" 
+		@down="downCallback" 
+		@up="upCallback" 
+		:down="downOption"
+		:up="upOption"
+		>
+			<!-- 分类模块 -->
+			<categoryBox :categoryList="categoryList"></categoryBox>
 
-		<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
-		<view class="list-container">
-			<!-- 热门推荐 -->
-			<swiperCourse name="热门推荐" word="HOT" :courseData="hotCourseList"></swiperCourse>
+			<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
+			<view class="list-container">
+				<!-- 热门推荐 -->
+				<swiperCourse name="热门推荐" word="HOT" :courseData="hotCourseList"></swiperCourse>
 
-			<!-- 近期上新 -->
-			<scrollCourse name="近期上新" word="NEW" :courseData="newCourseList"></scrollCourse>
+				<!-- 近期上新 -->
+				<scrollCourse name="近期上新" word="NEW" :courseData="newCourseList"></scrollCourse>
 
-			<!-- 免费精选 -->
-			<swiperCourse name="免费精选" word="FREE" :courseData="freeCourseList"></swiperCourse>
+				<!-- 免费精选 -->
+				<swiperCourse name="免费精选" word="FREE" :courseData="freeCourseList"></swiperCourse>
 
-			<!--付费精品 -->
-			<listCourse name="付费精选" word="NICE" :courseData="payCourseList"></listCourse>
-		</view>
+				<!--付费精品 -->
+				<listCourse name="付费精选" word="NICE" :courseData="payCourseList"></listCourse>
+			</view>
+		</mescroll-body>
+
 	</view>
 	</view>
 </template>
@@ -38,14 +48,18 @@
 	import listCourse from "@/pages/index/components/list-course.vue"; //付费精品
 
 	import api from '@/api/index.js'
+	// 引入mescroll-mixins.js
+	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
+		mixins: [MescrollMixin], // 使用mixin
 		components: {
 			searchInput, //小程序中搜索
 			categoryBox, //分类模块
 			Banner, //轮播图
 			swiperCourse, //热门推荐
 			scrollCourse, //近期上新
-			listCourse, //付费精品
+			listCourse, //付费精品	
+
 		},
 		data() {
 			return {
@@ -55,6 +69,18 @@
 				newCourseList: [], //近期上新信息
 				freeCourseList: [], //免费精选信息
 				payCourseList: [], //付费精品信息
+
+				downOption: {
+					offset: 50, //距离下面还有多少加载
+				},
+				upOption: {
+					textLoading: '亲亲，在查询下页数据中',
+					page: {
+						num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
+						size: 10, // 每页数据的数量
+					},
+					textNoMore: '-- 已加载完所有数据 --',
+				},
 			}
 		},
 
@@ -68,20 +94,24 @@
 
 
 		onLoad() {
-			
+
 			// #ifdef APP-PLUS
 			// 搜索框提示信息，只在APP中有
 			this.placeholderData()
 			// #endif
-			
-			this.getBanner()
-			this.getNavList()
-			this.getHotCourse()
-			this.getNewCourseList()
-			this.getFreeCourseList()
-			this.getPayCourseList()
+
+			this.loadData()
 		},
 		methods: {
+
+			loadData() {
+				this.getBanner()
+				this.getNavList()
+				this.getHotCourse()
+				this.getNewCourseList()
+				this.getFreeCourseList()
+			},
+
 			// 搜索框滚动数据
 			placeholderData() {
 				//获取当前页面实例, 仅 App 支持写在APP-PLUS条件编译下
@@ -131,7 +161,7 @@
 					let res = await api.getBannerList()
 					this.bannerList = res.data
 				} catch (e) {
-					console.log(e,'广告信息')
+					console.log(e, '广告信息')
 				}
 			},
 
@@ -141,17 +171,21 @@
 					let res = await api.getNavList()
 					this.categoryList = res.data
 				} catch (e) {
-					confirm.log(e,'分类信息')
+					confirm.log(e, '分类信息')
 				}
 			},
 
 			// 热门推荐
 			async getHotCourse() {
 				try {
-					let res = await api.getCourseList({sort: "hot", current: 1, size: 8})
+					let res = await api.getCourseList({
+						sort: "hot",
+						current: 1,
+						size: 8
+					})
 					this.hotCourseList = res.data.records
 				} catch (e) {
-					confirm.log(e,'热门推荐')
+					confirm.log(e, '热门推荐')
 				}
 			},
 
@@ -160,17 +194,16 @@
 				try {
 					let res = await api.getCourseList({
 						current: 1,
-						isFree: 1,
+						isFree: 0,
 						size: 8
 					})
 					this.newCourseList = res.data.records
 				} catch (e) {
-					confirm.log(e,'近期上新')
+					confirm.log(e, '近期上新')
 				}
 			},
 
 			// 免费精选信息
-
 			async getFreeCourseList() {
 				try {
 					let res = await api.getCourseList({
@@ -180,24 +213,25 @@
 					})
 					this.freeCourseList = res.data.records
 				} catch (e) {
-					confirm.log(e,'免费精选信息')
+					confirm.log(e, '免费精选信息')
 				}
 			},
 
-			// 付费精品信息
-			async getPayCourseList() {
-				try {
-					let res = await api.getCourseList({
-						isFree: 0,
-						current: 1,
-						size: 10
-					})
-					this.payCourseList = res.data.records
-				} catch (e) {
-					confirm.log(e,'付费精品信息')
-				}
-			},
 
+			async upCallback(page) {				
+				if (page.num === 1) {
+					this.loadData()
+					this.payCourseList = []
+				}
+				let res = await api.getCourseList({
+					isFree: 1,
+					current: page.num,
+					size: page.size
+				})
+				let currentList=res.data.records
+				this.payCourseList = this.payCourseList.concat(currentList)
+				this.mescroll.endBySize(currentList.length, res.data.total)
+			}
 		}
 	}
 </script>

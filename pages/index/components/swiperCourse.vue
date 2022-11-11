@@ -16,7 +16,6 @@
 <script>
 	import listBox from './list-box.vue'; // 热门推荐大盒子	
 	import courseItem from '@/components/course-item/course-item.vue'; //盒子中每一项
-	import courseData from '@/mock/courseData.js'
 	export default {
 		components: {
 			listBox,
@@ -28,7 +27,7 @@
 			// 总数据
 			courseData: {
 				type: Array,
-				default: () =>courseData
+				default: () =>[]
 			},
 			// title 名称
 			name:{

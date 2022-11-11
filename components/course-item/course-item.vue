@@ -37,19 +37,7 @@
 
 			item: {
 				type: Object,
-				default: () => {
-					return {
-						id: 1,
-						mainImage: 'http://10.idqqimg.com/qqcourse_logo_ng/ajNVdqHZLLAWb3qFGBhykjmcTvz9CWmwib2Qj7c3Vxjia4y5fgSoNdrMYIdH11Dl1OCraibA7u0mts/600',
-						totalTime: '00:59:08',
-						title: 'SpringBoot项目实战',
-						nickName: '小谷老师',
-						isFree: 0, //是否免费：0收费，1免费
-						priceOriginal: 999, // 原价
-						priceDiscount: 699.9, // 优惠价
-						studyTotal: 899
-					}
-				}
+				default: () => {}
 			}
 		},
 		data() {

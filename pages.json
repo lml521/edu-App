@@ -115,5 +115,10 @@
 				"selectedIconPath": "static/tab/my-active.png"
 			}
 		]
+	},
+	"pullToRefresh": {
+	 "style":"circle",
+	 "color":"#ff536f"
 	}
+
 }

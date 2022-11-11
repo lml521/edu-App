@@ -1,14 +1,13 @@
 <template>
 	<listBox :name="name" :word="word">
 		<courseItem :item="item" v-for="(item,index) in courseData"
-		:key="item.id"></courseItem>
+		:key="index"></courseItem>
 	</listBox>
 </template>
 
 <script>
 	import listBox from '@/pages/index/components/list-box.vue'
-	import courseData from '@/mock/courseData.js'
-	
+
 	import courseItem from '@/components/course-item/course-item.vue'; //盒子中每一项
 	export default {
 		components: {
@@ -30,7 +29,7 @@
 			// 总数据
 			courseData: {
 				type: Array,
-				default:() =>courseData
+				default:() =>[]
 			},
 			},
 		data() {
