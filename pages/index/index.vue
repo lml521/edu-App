@@ -91,6 +91,13 @@
 				this.handleOpenScanCode()
 			}
 		},
+		
+		// 搜索框
+		onNavigationBarSearchInputClicked :function(){
+			uni.navigateTo({
+				url:"/pages/search/search"
+			})
+		},
 
 
 		onLoad() {

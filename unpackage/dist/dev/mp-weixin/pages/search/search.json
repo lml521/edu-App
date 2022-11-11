@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "search-input": "/components/search-input/search-input",
+    "keyword": "/pages/search/components/keyword"
+  }
+}

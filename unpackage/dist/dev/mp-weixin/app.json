@@ -5,7 +5,8 @@
     "pages/classify/classify",
     "pages/question/question",
     "pages/read/read",
-    "pages/public/web-view"
+    "pages/public/web-view",
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {

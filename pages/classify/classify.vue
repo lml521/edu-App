@@ -8,7 +8,7 @@
 		</scroll-view>
 
 		<scroll-view scroll-y="true" class="right noScorll">
-			<view class="tag" v-for="(ele,i) in labelList" :key="i" @click="handelSearch">
+			<view class="tag" v-for="(ele,i) in labelList" :key="i" @click="handelSearch(ele)">
 				{{ele.name}}
 			</view>
 
@@ -36,6 +36,9 @@
 			console.log(e)
 			if(e.index==0){
 				// 跳转  
+				uni.navigateTo({
+					url:"/pages/search/search"
+				})
 			}
 			
 		},
@@ -57,9 +60,20 @@
 			
 			
 			// 点击每一项跳转页面 
-			handelSearch(){
+			handelSearch(item){
+				console.log(item)
+				
 				console.log(1)
 				
+				let params={
+					labelId:item.id,
+					name:item.name,
+					activeIndex:this.activeIndex
+				}
+				
+				uni.navigateTo({
+					url:`/pages/search/search?params=${ JSON.stringify(params) }`
+				})
 			},
 		}
 	}

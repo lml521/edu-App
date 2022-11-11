@@ -2,6 +2,7 @@
   "navigationBarTextStyle": "white",
   "navigationBarBackgroundColor": "#345DC2",
   "usingComponents": {
+    "mescroll-body": "/uni_modules/mescroll-uni/components/mescroll-body/mescroll-body",
     "search-input": "/components/search-input/search-input",
     "category-box": "/components/category-box/category-box",
     "banner": "/components/banner/banner",
