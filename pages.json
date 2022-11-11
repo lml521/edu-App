@@ -1,5 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	// 首页 
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -42,11 +43,28 @@
 			"path": "pages/user/user"
 
 		},
+		
+		// 分类 
 		{
 			"path": "pages/classify/classify",
 			"style": {
-				"navigationBarTitleText": "分类",
-				"enablePullDownRefresh": false
+				// "navigationBarTitleText": "分类",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#345DC2",
+				"app-plus": {
+					"titleNView": {
+						
+						"buttons": [ //按钮 扫一扫,只有app才有， 注意最前面放逗号,
+							{
+								"float": "right",
+								"fontSize": "16",
+								"background": "rgba(0,0,0,0)",
+								"fontSrc": "/static/icon/iconfont.ttf",
+								"text": "\ue608"
+							}
+						]
+					}
+				}
 			}
 
 		},
@@ -68,6 +86,15 @@
 		}
 	    ,{
             "path" : "pages/public/web-view",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/search/search",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

@@ -7,7 +7,7 @@
 
 <script>
 	import listBox from '@/pages/index/components/list-box.vue'
-
+	
 	import courseItem from '@/components/course-item/course-item.vue'; //盒子中每一项
 	export default {
 		components: {
