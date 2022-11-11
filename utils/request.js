@@ -1,8 +1,8 @@
 import config from '@/config/index.js'
 
 const request=(options)=>{
-	return new Promise((resove,reject)=>{
-		url.request({
+	return new Promise((resolve,reject)=>{
+		uni.request({
 			url: config.baseUrl+options.url,
 			method:options.method || 'GET',
 			header:{
@@ -11,7 +11,7 @@ const request=(options)=>{
 			data:options.data|| {},
 			success: res => {
 				if(res.data.code===20000){
-					resove(res.data)
+					resolve(res.data)
 				}
 			},
 			fail: (error) => {
@@ -23,3 +23,4 @@ const request=(options)=>{
 	})
 	
 }
+export default request

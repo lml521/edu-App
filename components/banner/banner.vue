@@ -31,25 +31,7 @@
 		props: {
 			bannerList: { // 轮播图数据
 				type: Array,
-				default: () => [{
-						id: 1,
-						imageUrl: "/static/images/banner1.jpg",
-						background: "#45328c",
-						advertUrl: '/pages/course/course-details'
-		 		},
-					{
-		 			id: 2,
-						imageUrl: "/static/images/banner2.jpg",
-						background: "#006C00",
-						advertUrl: '/pages/course/course-details'
-					},
-					{
-						id: 3,
-						imageUrl: "/static/images/banner3.jpg",
-						background: "#0072B7",
-						advertUrl: '/pages/course/course-details'
-					}
-				],
+				default: () => [],
 			}
 		},
 		data() {

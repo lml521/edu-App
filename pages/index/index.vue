@@ -6,25 +6,24 @@
 		<!-- #endif -->
 
 		<!-- 轮播图 -->
-		<Banner></Banner>
+		<Banner :bannerList="bannerList"></Banner>
 
 		<!-- 分类模块 -->
-		<categoryBox></categoryBox>
-
+		<categoryBox :categoryList="categoryList"></categoryBox>
 
 		<!-- 热门推荐、近期上新、免费精选 、付费精品、 -->
 		<view class="list-container">
 			<!-- 热门推荐 -->
-			<swiperCourse name="热门推荐" word="HOT"></swiperCourse>
+			<swiperCourse name="热门推荐" word="HOT" :courseData="hotCourseList"></swiperCourse>
 
 			<!-- 近期上新 -->
-			<scrollCourse name="近期上新" word="NEW"></scrollCourse>
+			<scrollCourse name="近期上新" word="NEW" :courseData="newCourseList"></scrollCourse>
 
 			<!-- 免费精选 -->
-			<swiperCourse name="免费精选" word="FREE"></swiperCourse>
+			<swiperCourse name="免费精选" word="FREE" :courseData="freeCourseList"></swiperCourse>
 
 			<!--付费精品 -->
-			<listCourse name="付费精选" word="NICE"></listCourse>
+			<listCourse name="付费精选" word="NICE" :courseData="payCourseList"></listCourse>
 		</view>
 	</view>
 	</view>
@@ -38,7 +37,7 @@
 	import scrollCourse from '@/pages/index/components/scrollCourse.vue'; //近期上新
 	import listCourse from "@/pages/index/components/list-course.vue"; //付费精品
 
-	import {getBannerList} from '@/api/index.js'
+	import api from '@/api/index.js'
 	export default {
 		components: {
 			searchInput, //小程序中搜索
@@ -46,10 +45,17 @@
 			Banner, //轮播图
 			swiperCourse, //热门推荐
 			scrollCourse, //近期上新
-			listCourse,
+			listCourse, //付费精品
 		},
 		data() {
-			return {}
+			return {
+				bannerList: [], //广告信息
+				categoryList: [], //分类信息
+				hotCourseList: [], //热门推荐信息
+				newCourseList: [], //近期上新信息
+				freeCourseList: [], //免费精选信息
+				payCourseList: [], //付费精品信息
+			}
 		},
 
 		// app 扫码 
@@ -60,17 +66,22 @@
 			}
 		},
 
-		
+
 		onLoad() {
+			
 			// #ifdef APP-PLUS
 			// 搜索框提示信息，只在APP中有
 			this.placeholderData()
 			// #endif
 			
 			this.getBanner()
+			this.getNavList()
+			this.getHotCourse()
+			this.getNewCourseList()
+			this.getFreeCourseList()
+			this.getPayCourseList()
 		},
 		methods: {
-
 			// 搜索框滚动数据
 			placeholderData() {
 				//获取当前页面实例, 仅 App 支持写在APP-PLUS条件编译下
@@ -101,10 +112,7 @@
 					})
 				}, 3000) // () 自调用第一次立即执行，但是ios会报错，所以在定时器外面执行第一次
 			},
-
-
 			// 扫码
-
 			async handleOpenScanCode() {
 				try {
 					let res = await uni.scanCode()
@@ -116,16 +124,80 @@
 					//TODO handle the exception
 					console.log(e);
 				}
-
-
+			},
+			// 获取 轮播图 
+			async getBanner() {
+				try {
+					let res = await api.getBannerList()
+					this.bannerList = res.data
+				} catch (e) {
+					console.log(e,'广告信息')
+				}
 			},
 
+			// 分类模块 
+			async getNavList() {
+				try {
+					let res = await api.getNavList()
+					this.categoryList = res.data
+				} catch (e) {
+					confirm.log(e,'分类信息')
+				}
+			},
 
-			async getBanner() {
-				let res = await getBannerList()
-			console.log(res,'res')
+			// 热门推荐
+			async getHotCourse() {
+				try {
+					let res = await api.getCourseList({sort: "hot", current: 1, size: 8})
+					this.hotCourseList = res.data.records
+				} catch (e) {
+					confirm.log(e,'热门推荐')
+				}
+			},
 
-			}
+			// 近期上新
+			async getNewCourseList() {
+				try {
+					let res = await api.getCourseList({
+						current: 1,
+						isFree: 1,
+						size: 8
+					})
+					this.newCourseList = res.data.records
+				} catch (e) {
+					confirm.log(e,'近期上新')
+				}
+			},
+
+			// 免费精选信息
+
+			async getFreeCourseList() {
+				try {
+					let res = await api.getCourseList({
+						sort: "new",
+						current: 1,
+						size: 10
+					})
+					this.freeCourseList = res.data.records
+				} catch (e) {
+					confirm.log(e,'免费精选信息')
+				}
+			},
+
+			// 付费精品信息
+			async getPayCourseList() {
+				try {
+					let res = await api.getCourseList({
+						isFree: 0,
+						current: 1,
+						size: 10
+					})
+					this.payCourseList = res.data.records
+				} catch (e) {
+					confirm.log(e,'付费精品信息')
+				}
+			},
+
 		}
 	}
 </script>

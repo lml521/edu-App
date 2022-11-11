@@ -49,21 +49,20 @@
     /* 快应用特有相关 */
     "quickapp" : {},
 	// "H5相关 "
-	"H5":{
-		"devServer":{
-				
-			"proxy":{
-				"/api":{ 
-					"target":"http://m.mengxuegu.com/api",
-					"changeOrigin":true,
-					"pathRewrite":{
-						"^/api":""
+	"h5": {
+			"devServer": {
+				"proxy" : {
+					"/api" : {
+						
+						"target" :"https://mock.mengxuegu.com/mock/5fdc6ffb5b350029c77c973a/mxg-education-app",
+						"changeOrigin" : true,
+						"pathRewrite" : {
+							"^/api" : ""
+						}
 					}
 				}
 			}
-		}
-		
-	},
+		},
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "",

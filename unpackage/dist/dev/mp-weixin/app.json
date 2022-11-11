@@ -4,7 +4,8 @@
     "pages/user/user",
     "pages/classify/classify",
     "pages/question/question",
-    "pages/read/read"
+    "pages/read/read",
+    "pages/public/web-view"
   ],
   "subPackages": [],
   "window": {

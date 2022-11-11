@@ -2,17 +2,14 @@
 	
 		<!-- 热门推荐大盒子 -->
 		 <listBox :name="name" :word="word">
-			
 			<swiper :style="{height:`${200*rows}rpx`}">
-				<swiper-item v-for="i in column" :key="i">
+				<swiper-item v-for="(e,i) in column" :key="i">
 					<view class="swiper-item">
-						<courseItem :item="item" v-for="(item,index) in courseData.slice((i-1)*rows,i*rows)" 
+						<courseItem :item="item" v-for="(item,index) in courseData.slice(i*rows,(i-1)*rows)" 
 						:key="item.id"></courseItem>
 					</view>
 				</swiper-item>
-				
 			</swiper>
-			
 		</listBox> 
 	
 </template>
@@ -52,14 +49,6 @@
 				type: Number,
 				default: 5,
 			}
-
-
-
-
-
-
-
-
 		},
 		data() {
 			return {
