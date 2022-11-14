@@ -39,10 +39,10 @@
 			},
 			clickTagHandler(item) {
 				this.handelSetSearch(item) 
+				this.$emit("doSearch", {value : item})
 			},
 
 			storageHistory() {
-				
 			 uni.getStorage({
 					historyList, // 等价于 key: key,
 					success: (res) => { //注意箭头函数

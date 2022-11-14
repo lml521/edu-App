@@ -4600,14 +4600,16 @@ var render = function() {
     "uni-view",
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
     [
-      _c("keyword", {
-        attrs: { _i: 1 },
-        on: {
-          doSearch: function($event) {
-            return _vm.$handleViewEvent($event)
-          }
-        }
-      })
+      _vm._$g(1, "i")
+        ? _c("keyword", {
+            attrs: { _i: 1 },
+            on: {
+              doSearch: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            }
+          })
+        : _vm._e()
     ],
     1
   )

@@ -229,8 +229,9 @@ var _default = {
     return {
       params: null,
       content: "", //搜索内容
-      focus: false //是否
-    };
+      focus: false, //搜索框是否聚焦
+      searched: false };
+
 
 
 
@@ -258,11 +259,7 @@ var _default = {
 
 
 
-
-
     this.doSearch();
-
-
   },
 
 

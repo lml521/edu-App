@@ -155,10 +155,10 @@ var historyList = "historyList";var _default =
     },
     clickTagHandler: function clickTagHandler(item) {
       this.handelSetSearch(item);
+      this.$emit("doSearch", { value: item });
     },
 
     storageHistory: function storageHistory() {var _this = this;
-
       uni.getStorage({
         historyList: historyList, // 等价于 key: key,
         success: function success(res) {//注意箭头函数

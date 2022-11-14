@@ -25,7 +25,7 @@
 	
 	
 		<!-- 热门历史关键词提示组件 -->
-		<keyword @doSearch="doSearch"></keyword>
+		<keyword @doSearch="doSearch" v-if="!searched"></keyword>
 
 	</view>
 </template>
@@ -43,7 +43,8 @@
 			return {
 				params: null,
 				content: "", //搜索内容
-				focus:false,//是否
+				focus:false,//搜索框是否聚焦
+				searched:false,
 				
 				// #ifdef APP-PLUS
 				currentWebview:null
@@ -72,11 +73,7 @@
 			// 失去焦点，收起键盘（有时不会收起）
 			this.currentWebview.setTitleNViewSearchInputFocus(false)
 			// #endif
-			
-			
 			this.doSearch()
-			
-			
 		},
 
 
