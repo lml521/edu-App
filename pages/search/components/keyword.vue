@@ -6,7 +6,6 @@
 			<view v-for="(item,index) in hotList" :key="index" @click="clickTagHandler(item)">
 				{{item}}
 			</view>
-
 		</view>
 		<view class="title space-between">
 			<text>历史搜索</text>
@@ -61,8 +60,7 @@
 					historyList, // 等价于 key: key,
 					success: (res) => { //注意箭头函数
 						// console.log('获取成功', res.data);
-						// 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在
-						不添加
+						// 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在不添加
 						this.content && res.data.indexOf(this.content) < 0 &&
 							res.data.unshift(this.content)
 						// 保存到历史记录

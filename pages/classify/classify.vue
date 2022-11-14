@@ -60,16 +60,8 @@
 			
 			// 点击每一项跳转  搜索 页面 
 			handelSearch(item){
-				
-				let params={
-					labelId:item.id,
-					name:item.name,
-					activeIndex:this.activeIndex
-				}
-				
-				uni.navigateTo({
-					url:`/pages/search/search?params=${ JSON.stringify(params) }`
-				})
+				console.log(item,`/pages/search/search?labelId=${item.id}&labelName=${item.name}&activeIndex=${this.activeIndex}`)				
+			this.navTo(`/pages/search/search?labelId=${item.id}&labelName=${item.name}&activeIndex=${this.activeIndex}`)
 			},
 		}
 	}

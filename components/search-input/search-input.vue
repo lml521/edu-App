@@ -2,7 +2,7 @@
 	<!-- 搜索 -->
 	<view class="search-box">
 		<input class="search-input" type="text" placeholder="搜索你想要的内容" disabled  
-		@click.native="toSearch" >
+		 >
 	</view>
 </template>
 
@@ -15,13 +15,7 @@
 			};
 		},
 		
-		methods:{
-			toSearch(){
-				uni.navigateTo({
-					url:'/pages/search/search'
-				})
-			}
-		}
+		
 	}
 </script>
 

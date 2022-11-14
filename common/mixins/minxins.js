@@ -8,7 +8,6 @@ export default {
 	methods:{
 		// 跳转 
 		navTo(url,options={}){
-			console.log(124)
 			if(!url) return 
 			if(options.login){
 				uni.navigateTo({
@@ -19,8 +18,6 @@ export default {
 			uni.navigateTo({
 				url
 			})
-			
-			
 		},
 		
 		// 返回上一级

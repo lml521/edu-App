@@ -1,9 +1,29 @@
 <template>
-
+<view class="search-container">
 	<!-- 搜索 -->
 	<!-- 小程序中搜索 -->
-
-	<view class="search-container">
+	<!-- #ifdef MP-WEIXIN -->
+	<uni-search-bar 
+	v-model="content"
+	:focus="focus" 
+	placeholder="搜索你想要的内容"
+	@confirm="handleSearch" 
+	@cancel="navBack()" 
+	radius="100"
+	clearButton="auto" 
+	cancelButton="always"
+	> 
+	<template v-slot:searchIcon>
+		<text  class="iconfont icon-search"></text>
+	</template>
+	<template v-slot:clearIcon>
+		<text  class="iconfont icon-roundclosefill"></text>
+	</template>
+	
+	</uni-search-bar>
+	<!-- #endif -->
+	
+	
 		<!-- 热门历史关键词提示组件 -->
 		<keyword @doSearch="doSearch"></keyword>
 
@@ -11,8 +31,6 @@
 </template>
 
 <script>
-	// 1. 当前页面实例变量，声明外面提高性能
-	let currentWebview = null
 
 	import keyword from '@/pages/search/components/keyword.vue'
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
@@ -24,8 +42,14 @@
 		data() {
 			return {
 				params: null,
-				content: null, //搜索内容
-
+				content: "", //搜索内容
+				focus:false,//是否
+				
+				// #ifdef APP-PLUS
+				currentWebview:null
+				
+				// #endif
+				
 			};
 		},
 		// 监听原生导航按钮事件
@@ -35,8 +59,9 @@
 				this.navBack()
 			}
 		},
-		// 搜索  实时会获取搜索框你们的内容
+		// 实时会获取搜索框你们的内容
 		onNavigationBarSearchInputChanged(e) {
+			console.log( e.text)
 			this.content = e.text
 		},
 
@@ -45,38 +70,66 @@
 			// console.log('用户点击软键盘上的“搜索”按钮', e.text)
 			// #ifdef APP-PLUS
 			// 失去焦点，收起键盘（有时不会收起）
-			currentWebview.setTitleNViewSearchInputFocus(false)
+			this.currentWebview.setTitleNViewSearchInputFocus(false)
 			// #endif
+			
+			
 			this.doSearch()
+			
+			
 		},
 
 
-
+		// 传递过来的数据 
 		onLoad(options) {
-			// #ifdef APP-PLUS
-			currentWebview = this.$mp.page.$getAppWebview()
-			// #endif
-			if (options.params) {
-				this.params = JSON.parse(options.params)
-				// this.doSearch()
-			} else {
-				// #ifdef APP-PLUS
-				//点击搜索框获取焦点, 因为分类页会跳转到此页面后不用获取焦点，所以不在pages.json中开启自动获取焦点
-				currentWebview.setTitleNViewSearchInputFocus(true)
-				// #endif
-
-			}
+			this.listenerParams(options)
 		},
 		methods: {
-			// 搜索
-			doSearch() {
-				uni.showLoading()
+			
+			// 监听 
+			listenerParams(options){
+				
+				// 在app 端获取 实例
+				// #ifdef APP-PLUS
+				this.currentWebview = this.$mp.page.$getAppWebview()
+				// #endif
+				console.log(JSON.stringify(options) ,JSON.stringify(options) !== "{}")
+				// 判断是否 传递有参数  也就是说 在分类页面 点击 胶囊按钮   有参数进行查询 
+				if (JSON.stringify(options) !== "{}") {
+					console.log(options,'options')
+					this.params = options
+					
+					// 调用设置搜索框值的方法
+					// this.handleSetSearchValue(options.labelName)
+					
+					// 调用搜索查询的方法的
+					this.doSearch({value : options.labelName})
+				}else {
+					
+					// 在APP中 如果没有传递参数 则 搜索框聚焦
+					// #ifdef APP-PLUS
+					// 没有参数,则需要让搜索框获取到焦点
+					this.currentWebview.setTitleNViewSearchInputFocus(true)
+					console.log(this.currentWebview,'currentWebview')
+					// #endif
+					
+					// #ifdef MP-WEIXIN
+					this.focus = true
+					// #endif
+				
+				}	
+				
 			},
+			
+			
+			
+			
+			
+			
 
-
-
-			// 搜索
+			// 搜索  查询 
 			doSearch(obj) {
+				console.log('搜索')
 				// obj有数据，则获取
 				this.content = obj && obj.value ? obj.value : this.content
 				// 标识搜索过，隐藏keyword.vue组件内容
@@ -86,9 +139,13 @@
 				// 传递给小程序 搜索框, 注意上面取 `ref="searchBar"`
 				this.$refs.searchBar.searchVal = this.content
 				// #endif
+				// 调用设置搜索框值的方法
+				// this.handleSetSearchValue(options.labelName)
+									
+				// 调用搜索查询的方法的
 				this.storageHistory()
 
-				uni.showLoading()
+				// uni.showLoading()
 			},
 
 
@@ -109,6 +166,7 @@
 						// 没有历史数据。
 						// 当前有输入内容，直接保存，注意是数组
 						this.content && uni.setStorageSync(key, [this.content])
+						console.log(error)
 					}
 				})
 			},
@@ -119,5 +177,13 @@
 </script>
 
 <style lang="scss">
-
+	.search-container {
+		width: 750rpx;
+		/* 全屏，不然后面`下拉筛选粘组件`粘顶会失效 */
+		margin: 0;
+		padding: 0;
+	}
+	uni-search-bar{
+		
+	}
 </style>

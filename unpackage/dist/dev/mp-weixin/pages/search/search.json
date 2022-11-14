@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "",
   "usingComponents": {
+    "uni-search-bar": "/components/uni-search-bar/uni-search-bar",
     "search-input": "/components/search-input/search-input",
     "keyword": "/pages/search/components/keyword"
   }

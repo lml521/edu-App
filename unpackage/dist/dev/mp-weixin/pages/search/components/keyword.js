@@ -134,7 +134,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 var historyList = "historyList";var _default =
 {
@@ -177,8 +176,7 @@ var historyList = "historyList";var _default =
         historyList: historyList, // 等价于 key: key,
         success: function success(res) {//注意箭头函数
           // console.log('获取成功', res.data);
-          // 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在
-          不添加;
+          // 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在不添加
           _this.content && res.data.indexOf(_this.content) < 0 &&
           res.data.unshift(_this.content);
           // 保存到历史记录

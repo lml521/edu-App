@@ -194,16 +194,8 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/api/index.js */ 23
 
     // 点击每一项跳转  搜索 页面 
     handelSearch: function handelSearch(item) {
-
-      var params = {
-        labelId: item.id,
-        name: item.name,
-        activeIndex: this.activeIndex };
-
-
-      uni.navigateTo({
-        url: "/pages/search/search?params=".concat(JSON.stringify(params)) });
-
+      console.log(item, "/pages/search/search?labelId=".concat(item.id, "&labelName=").concat(item.name, "&activeIndex=").concat(this.activeIndex));
+      this.navTo("/pages/search/search?labelId=".concat(item.id, "&labelName=").concat(item.name, "&activeIndex=").concat(this.activeIndex));
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

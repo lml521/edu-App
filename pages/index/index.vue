@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 小程序中搜索 -->
 		<!-- #ifdef MP-WEIXIN -->
-		<searchInput @click.native="navTo("/pages/search/search")"></searchInput>
+		<searchInput @click.native="navTo('/pages/search/search')"></searchInput>
 		<!-- #endif -->
 
 		<!-- 轮播图 -->
