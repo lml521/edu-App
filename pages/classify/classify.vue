@@ -53,17 +53,13 @@
 
 			// 切换 分类名称
 			ChangeActiveIndex(index) {
-				console.log(index)
 				this.activeIndex = index
 				this.labelList = this.classifyList[index].labelList
 			},
 			
 			
-			// 点击每一项跳转页面 
+			// 点击每一项跳转  搜索 页面 
 			handelSearch(item){
-				console.log(item)
-				
-				console.log(1)
 				
 				let params={
 					labelId:item.id,

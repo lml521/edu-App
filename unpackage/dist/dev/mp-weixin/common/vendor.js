@@ -2667,62 +2667,55 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 18:
+/***/ 12:
+/*!************************************************************!*\
+  !*** E:/实训二/案例/06-uniApp/edu-App/common/mixins/minxins.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  data: function data() {
+    return {};
+
+
+  },
+
+  methods: {
+    // 跳转 
+    navTo: function navTo(url) {var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      console.log(124);
+      if (!url) return;
+      if (options.login) {
+        uni.navigateTo({
+          url: "/pages/auth/login" });
+
+      }
+
+      uni.navigateTo({
+        url: url });
+
+
+
+    },
+
+    // 返回上一级
+    navBack: function navBack() {var delta = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      uni.navigateBack({ delta: delta });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 19:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 19);
-
-/***/ }),
-
-/***/ 19:
-/*!************************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() {
-  return this || (typeof self === "object" && self);
-})() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(/*! ./runtime */ 20);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
+module.exports = __webpack_require__(/*! regenerator-runtime */ 20);
 
 /***/ }),
 
@@ -2758,6 +2751,54 @@ module.exports = g;
 /***/ }),
 
 /***/ 20:
+/*!************************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This method of obtaining a reference to the global object needs to be
+// kept identical to the way it is obtained in runtime.js
+var g = (function() {
+  return this || (typeof self === "object" && self);
+})() || Function("return this")();
+
+// Use `getOwnPropertyNames` because not all browsers support calling
+// `hasOwnProperty` on the global `self` object in a worker. See #183.
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+
+// Save the old regeneratorRuntime in case it needs to be restored later.
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+
+// Force reevalutation of runtime.js.
+g.regeneratorRuntime = undefined;
+
+module.exports = __webpack_require__(/*! ./runtime */ 21);
+
+if (hadRuntime) {
+  // Restore the original runtime.
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  // Remove the global property added by runtime.js.
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+
+
+/***/ }),
+
+/***/ 21:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -3489,109 +3530,9 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 21:
-/*!************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/api/index.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 22));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-// 轮播图 
-var getBannerList = function getBannerList() {
-  return (0, _request.default)({ url: '/article/api/advert/show/1', method: "GET" });
-};
-
-
-// 分类模块 
-var getNavList = function getNavList() {
-  return (0, _request.default)({ url: '/article/api/category/label/list', method: "GET" });
-};
-
-// 
-var getCourseList = function getCourseList(data) {
-  return (0, _request.default)({
-    url: '/course/api/course/search',
-    method: "POST",
-    data: data });
-
-
-};var _default =
-
-
-{
-  getBannerList: getBannerList,
-  getNavList: getNavList,
-  getCourseList: getCourseList };exports.default = _default;
-
-/***/ }),
-
 /***/ 22:
-/*!****************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/utils/request.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! @/config/index.js */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
-
-var request = function request(options) {
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: _index.default.baseUrl + options.url,
-      method: options.method || 'GET',
-      header: _objectSpread({},
-      options.header),
-
-      data: options.data || {},
-      success: function success(res) {
-        if (res.data.code === 20000) {
-          resolve(res.data);
-        }
-      },
-      fail: function fail(error) {
-        reject(error);
-      } });
-
-
-
-  });
-
-};var _default =
-request;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 23:
-/*!***************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/config/index.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var config = {
-
-  // 请求公共接口地址
-  baseUrl: 'http://m.mengxuegu.com/api' };var _default =
-
-
-
-
-
-
-
-
-config;exports.default = _default;
-
-/***/ }),
-
-/***/ 24:
 /*!*******************************************************************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js ***!
   \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3654,6 +3595,106 @@ var MescrollMixin = {
 
 
 MescrollMixin;exports.default = _default;
+
+/***/ }),
+
+/***/ 23:
+/*!************************************************!*\
+  !*** E:/实训二/案例/06-uniApp/edu-App/api/index.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+// 轮播图 
+var getBannerList = function getBannerList() {
+  return (0, _request.default)({ url: '/article/api/advert/show/1', method: "GET" });
+};
+
+
+// 分类模块 
+var getNavList = function getNavList() {
+  return (0, _request.default)({ url: '/article/api/category/label/list', method: "GET" });
+};
+
+// 
+var getCourseList = function getCourseList(data) {
+  return (0, _request.default)({
+    url: '/course/api/course/search',
+    method: "POST",
+    data: data });
+
+
+};var _default =
+
+
+{
+  getBannerList: getBannerList,
+  getNavList: getNavList,
+  getCourseList: getCourseList };exports.default = _default;
+
+/***/ }),
+
+/***/ 24:
+/*!****************************************************!*\
+  !*** E:/实训二/案例/06-uniApp/edu-App/utils/request.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! @/config/index.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+var request = function request(options) {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: _index.default.baseUrl + options.url,
+      method: options.method || 'GET',
+      header: _objectSpread({},
+      options.header),
+
+      data: options.data || {},
+      success: function success(res) {
+        if (res.data.code === 20000) {
+          resolve(res.data);
+        }
+      },
+      fail: function fail(error) {
+        reject(error);
+      } });
+
+
+
+  });
+
+};var _default =
+request;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 25:
+/*!***************************************************!*\
+  !*** E:/实训二/案例/06-uniApp/edu-App/config/index.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var config = {
+
+  // 请求公共接口地址
+  baseUrl: 'http://m.mengxuegu.com/api' };var _default =
+
+
+
+
+
+
+
+
+config;exports.default = _default;
 
 /***/ }),
 
@@ -10177,7 +10218,7 @@ internalMixin(Vue);
 
 /***/ 5:
 /*!**********************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/pages.json ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/pages.json ***!
   \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -10186,9 +10227,9 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 72:
+/***/ 73:
 /*!****************************************************************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni.js ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni.js ***!
   \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10997,9 +11038,9 @@ MeScroll.prototype.preventDefault = function (e) {
 
 /***/ }),
 
-/***/ 73:
+/***/ 74:
 /*!***********************************************************************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni-option.js ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni-option.js ***!
   \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11072,9 +11113,9 @@ GlobalOption;exports.default = _default;
 
 /***/ }),
 
-/***/ 74:
+/***/ 75:
 /*!*****************************************************************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-i18n.js ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-i18n.js ***!
   \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11099,9 +11140,9 @@ mescrollI18n;exports.default = _default;
 
 /***/ }),
 
-/***/ 75:
+/***/ 76:
 /*!**************************************************************************************************!*\
-  !*** F:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/wxs/mixins.js ***!
+  !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/wxs/mixins.js ***!
   \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {

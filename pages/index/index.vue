@@ -2,12 +2,11 @@
 	<view class="content">
 		<!-- 小程序中搜索 -->
 		<!-- #ifdef MP-WEIXIN -->
-		<searchInput></searchInput>
+		<searchInput @click.native="navTo("/pages/search/search")"></searchInput>
 		<!-- #endif -->
 
 		<!-- 轮播图 -->
 		<Banner :bannerList="bannerList"></Banner>
-
 		<mescroll-body 
 		ref="mescrollRef"
 		@init="mescrollInit" 
@@ -40,6 +39,8 @@
 </template>
 
 <script>
+	// 引入 mixins 
+	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
 	import categoryBox from '@/components/category-box/category-box.vue'; //分类模块
 	import Banner from '@/components/banner/banner.vue'; //轮播图
@@ -48,8 +49,7 @@
 	import listCourse from "@/pages/index/components/list-course.vue"; //付费精品
 
 	import api from '@/api/index.js'
-	// 引入mescroll-mixins.js
-	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+
 	export default {
 		mixins: [MescrollMixin], // 使用mixin
 		components: {
@@ -94,9 +94,8 @@
 		
 		// 搜索框
 		onNavigationBarSearchInputClicked :function(){
-			uni.navigateTo({
-				url:"/pages/search/search"
-			})
+			console.log(1234)
+			this.navTo("/pages/search/search")
 		},
 
 
@@ -106,7 +105,6 @@
 			// 搜索框提示信息，只在APP中有
 			this.placeholderData()
 			// #endif
-
 			this.loadData()
 		},
 		methods: {
