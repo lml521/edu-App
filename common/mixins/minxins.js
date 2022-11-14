@@ -23,7 +23,26 @@ export default {
 		// 返回上一级
 		navBack(delta=1){
 			uni.navigateBack({delta})
-		}
+		},
+		
+		
+		
+		handelSetSearch(item){
+			// 点击胶囊按钮 跳转页面 未能获取 dom节点
+			this.$nextTick(()=>{
+				// #ifdef APP-PLUS
+			const currentWebview = this.$mp.page.$getAppWebview();
+			currentWebview.setTitleNViewSearchInputText(item);
+			// #endif
+			
+			// #ifdef H5
+			const placeholder = document.querySelector('.uni-page-head-search-placeholder')
+			placeholder.innerHTML = ''
+			const inputSearch = document.querySelector('.uni-input-input[type=search]');
+			inputSearch.value = item;
+			// #endif
+			})
+		},
 		
 	}
 }

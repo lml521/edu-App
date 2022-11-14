@@ -2700,12 +2700,31 @@ function normalizeComponent (
     // 返回上一级
     navBack: function navBack() {var delta = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       uni.navigateBack({ delta: delta });
+    },
+
+
+
+    handelSetSearch: function handelSetSearch(item) {
+      // 点击胶囊按钮 跳转页面 未能获取 dom节点
+      this.$nextTick(function () {
+
+
+
+
+
+
+
+
+
+
+
+      });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
-/***/ 126:
+/***/ 175:
 /*!***************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/components/uni-search-bar/i18n/index.js ***!
   \***************************************************************************/
@@ -2713,9 +2732,9 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 127));
-var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 128));
-var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 129));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 176));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 177));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 178));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
   en: _en.default,
   'zh-Hans': _zhHans.default,
@@ -2723,7 +2742,7 @@ var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 1
 
 /***/ }),
 
-/***/ 127:
+/***/ 176:
 /*!**************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/components/uni-search-bar/i18n/en.json ***!
   \**************************************************************************/
@@ -2734,7 +2753,7 @@ module.exports = JSON.parse("{\"uni-search-bar.cancel\":\"cancel\",\"uni-search-
 
 /***/ }),
 
-/***/ 128:
+/***/ 177:
 /*!*******************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/components/uni-search-bar/i18n/zh-Hans.json ***!
   \*******************************************************************************/
@@ -2745,7 +2764,7 @@ module.exports = JSON.parse("{\"uni-search-bar.cancel\":\"cancel\",\"uni-search-
 
 /***/ }),
 
-/***/ 129:
+/***/ 178:
 /*!*******************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/components/uni-search-bar/i18n/zh-Hant.json ***!
   \*******************************************************************************/
@@ -10275,7 +10294,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 75:
+/***/ 73:
 /*!****************************************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni.js ***!
   \****************************************************************************************************/
@@ -11086,7 +11105,7 @@ MeScroll.prototype.preventDefault = function (e) {
 
 /***/ }),
 
-/***/ 76:
+/***/ 74:
 /*!***********************************************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-uni-option.js ***!
   \***********************************************************************************************************/
@@ -11161,7 +11180,7 @@ GlobalOption;exports.default = _default;
 
 /***/ }),
 
-/***/ 77:
+/***/ 75:
 /*!*****************************************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-i18n.js ***!
   \*****************************************************************************************************/
@@ -11188,7 +11207,7 @@ mescrollI18n;exports.default = _default;
 
 /***/ }),
 
-/***/ 78:
+/***/ 76:
 /*!**************************************************************************************************!*\
   !*** E:/实训二/案例/06-uniApp/edu-App/uni_modules/mescroll-uni/components/mescroll-uni/wxs/mixins.js ***!
   \**************************************************************************************************/

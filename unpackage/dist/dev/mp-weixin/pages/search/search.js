@@ -270,6 +270,7 @@ var _default = {
   onLoad: function onLoad(options) {
     this.listenerParams(options);
   },
+
   methods: {
 
     // 监听 
@@ -284,14 +285,12 @@ var _default = {
       if (JSON.stringify(options) !== "{}") {
         console.log(options, 'options');
         this.params = options;
-
+        this.content = options.labelName;
         // 调用设置搜索框值的方法
-        // this.handleSetSearchValue(options.labelName)
-
+        this.handelSetSearchValue(options.labelName);
         // 调用搜索查询的方法的
         this.doSearch({ value: options.labelName });
       } else {
-
         // 在APP中 如果没有传递参数 则 搜索框聚焦
 
 
@@ -306,12 +305,9 @@ var _default = {
       }
 
     },
-
-
-
-
-
-
+    handelSetSearchValue: function handelSetSearchValue(item) {
+      this.handelSetSearch(item);
+    },
 
     // 搜索  查询 
     doSearch: function doSearch(obj) {

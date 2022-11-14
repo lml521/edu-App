@@ -38,20 +38,7 @@
 
 			},
 			clickTagHandler(item) {
-				console.log(item)
-				// #ifdef APP-PLUS
-				const currentWebview = this.$mp.page.$getAppWebview();
-				currentWebview.setTitleNViewSearchInputText(item);
-				// #endif
-				// #ifdef H5
-				const placeholder = document.querySelector('.uni-page-head-search-placeholder')
-				placeholder.innerHTML = ''
-				const inputSearch = document.querySelector('.uni-input-input[type=search]');
-				inputSearch.value = item;
-				// #endif
-				this.storageHistory()
-				// 开始搜索
-				this.$emit('doSearch', {value: item})
+				this.handelSetSearch(item) 
 			},
 
 			storageHistory() {

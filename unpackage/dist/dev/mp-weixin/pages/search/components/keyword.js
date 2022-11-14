@@ -154,20 +154,7 @@ var historyList = "historyList";var _default =
 
     },
     clickTagHandler: function clickTagHandler(item) {
-      console.log(item);
-
-
-
-
-
-
-
-
-
-
-      this.storageHistory();
-      // 开始搜索
-      this.$emit('doSearch', { value: item });
+      this.handelSetSearch(item);
     },
 
     storageHistory: function storageHistory() {var _this = this;
