@@ -20,10 +20,11 @@
 		<keyword @doSearch="doSearch" v-if="!searched"></keyword>
 
 		<!-- tabBar 栏 切换 -->
-		<tabBar v-else v-model.sync="tabBarId"></tabBar>
+		<tabBar v-if="searched" v-model.sync="tabBarId"></tabBar>
+		<!-- 下拉赛选 导航组件 -->
 
-
-		
+		<downBar v-if="searched" :params="params"></downBar>
+		<!-- <view v-for="item in 90">{{item}}</view> -->
 
 	</view>
 </template>
@@ -31,14 +32,18 @@
 <script>
 	import keyword from '@/pages/search/components/keyword.vue'; //热门历史关键词提示组件
 
-	import tabBar from '@/components/common/tab-bar.vue'
+	import tabBar from '@/components/common/tab-bar.vue'; //tabBar 栏 切换 
+	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
+
 
 
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
+
 	export default {
 		components: {
 			searchInput,
 			tabBar,
+			downBar,
 			keyword
 		},
 		data() {
@@ -65,7 +70,7 @@
 		},
 		// 实时会获取搜索框你们的内容
 		onNavigationBarSearchInputChanged(e) {
-			console.log(e.text)
+			// console.log(e.text)
 			this.content = e.text
 		},
 
@@ -94,14 +99,16 @@
 				// #ifdef APP-PLUS
 				this.currentWebview = this.$mp.page.$getAppWebview()
 				// #endif
-				console.log(JSON.stringify(options), JSON.stringify(options) !== "{}")
+				// console.log(JSON.stringify(options), JSON.stringify(options) !== "{}")
 				// 判断是否 传递有参数  也就是说 在分类页面 点击 胶囊按钮   有参数进行查询 
 				if (JSON.stringify(options) !== "{}") {
-					console.log(options, 'options')
+					// console.log(options, 'options')
 					this.params = options
+					console.log(this.params, 'this.params')
+					
 					this.content = options.labelName
 					// 调用设置搜索框值的方法
-					this.handelSetSearchValue(options.labelName)
+					this.handelSetSearchValue()
 					// 调用搜索查询的方法的
 					this.doSearch({
 						value: options.labelName
@@ -111,7 +118,7 @@
 					// #ifdef APP-PLUS
 					// 没有参数,则需要让搜索框获取到焦点
 					this.currentWebview.setTitleNViewSearchInputFocus(true)
-					console.log(this.currentWebview, 'currentWebview')
+					// console.log(this.currentWebvie'w, 'currentWebview')
 					// #endif
 
 					// #ifdef MP-WEIXIN
@@ -127,7 +134,8 @@
 
 			// 搜索  查询 
 			doSearch(obj) {
-				console.log('搜索')
+				// console.log('搜索')
+				
 				// obj有数据，则获取
 				this.content = obj && obj.value ? obj.value : this.content
 				// 标识搜索过，隐藏keyword.vue组件内容

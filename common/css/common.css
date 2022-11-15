@@ -102,7 +102,7 @@ image {
 }
 
 /* 蒙层 */
-.mask {
+/* .mask {
 	z-index: 99;
 	position: fixed;
 	top: 0;
@@ -111,3 +111,4 @@ image {
 	bottom: 0;
 	background-color: rgba(0,0,0,0.7);
 }
+ */

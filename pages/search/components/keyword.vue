@@ -45,8 +45,7 @@
 			clearHistory() {
 				this.historyList = []
 				// uni.removeStorageSync(historyList)
-				
-				
+
 				// #ifdef MP-WEIXIN
 				wx.removeStorageSync(historyList)
 				// #endif 

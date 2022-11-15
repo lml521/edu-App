@@ -1,14 +1,14 @@
 <template>
+	<!-- tabBar 栏切换 -->
 	<!-- @touchmove.stop.prevent 禁止滑动，给一个空函数 -->
 	<view class="tab-bar" >
-		<view class="bar-view center">
+		<view class="bar-view center"  @touchmove.stop.prevent="()=>{}">
 			
 			<view class="bar-item" v-for="(item,index) in tabs" :key="index"  :class="{current:index===value}" 
 			@click="handelChangeTab(index)">
 				{{item.name}}
 				
 			</view>
-			
 		</view>
 	</view>
 </template>
@@ -40,7 +40,6 @@
 		methods:{
 			// tabBar 切换 
 			handelChangeTab(index){
-				console.log(index)
 				this.$emit('input',index)
 			}
 		}
