@@ -25,7 +25,17 @@
 			return {
 				//热门搜索
 				hotList: ['Java', 'SpringBoot', 'SpringCloud', 'Python', 'Vue', 'React'],
+				// #ifdef MP-WEIXIN
+				historyList:wx.getStorageSync(historyList),
+				// #endif 
+				
+				// #ifndef MP-WEIXIN
 				historyList: uni.getStorageSync(historyList), //历史搜索
+				// #endif 
+				
+				// historyList: uni.getStorageSync(historyList)
+
+
 				content:'',
 			}
 		},
@@ -34,7 +44,17 @@
 			// 清空 
 			clearHistory() {
 				this.historyList = []
-				uni.removeStorageSync(historyList)
+				// uni.removeStorageSync(historyList)
+				
+				
+				// #ifdef MP-WEIXIN
+				wx.removeStorageSync(historyList)
+				// #endif 
+				
+				
+				// #ifndef MP-WEIXIN
+			     uni.removeStorageSync(historyList) //历史搜索
+				// #endif 
 
 			},
 			clickTagHandler(item) {
@@ -51,12 +71,41 @@
 						this.content && res.data.indexOf(this.content) < 0 &&
 							res.data.unshift(this.content)
 						// 保存到历史记录
-						uni.setStorageSync(historyList, res.data)
+						// uni.setStorageSync(historyList, res.data)
+						
+						// #ifdef MP-WEIXIN
+						wx.setStorageSync(historyList, res.data)
+						// #endif 
+						
+						
+						// #ifndef MP-WEIXIN
+						 uni.setStorageSync(historyList, res.data)
+						// #endif 
+						
+						
+						
 					},
 					fail: (error) => { //注意箭头函数
 						// 没有历史数据。
 						// 当前有输入内容，直接保存，注意是数组
+						
+						
+						
+						// this.content && uni.setStorageSync(historyList, [this.content])
+						
+						// #ifdef MP-WEIXIN
+						
+						this.content && wx.setStorageSync(historyList, [this.content])
+						// #endif 
+						
+						
+						// #ifndef MP-WEIXIN
 						this.content && uni.setStorageSync(historyList, [this.content])
+						// #endif 
+						
+						
+						
+						
 					}
 				})
 			},
