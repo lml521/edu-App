@@ -1,1 +1,1 @@
-<view class="tab-bar"><view class="bar-view center"><view class="bar-item current">课程</view><view class="bar-item ">文章</view><view class="bar-item ">问答</view></view></view>
+<view class="tab-bar"><view data-event-opts="{{[['touchmove',[['e0',['$event']]]]]}}" class="bar-view center" catchtouchmove="__e"><block wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['handelChangeTab',[index]]]]]}}" class="{{['bar-item',(index===value)?'current':'']}}" bindtap="__e">{{''+item.name+''}}</view></block></view></view>

@@ -163,7 +163,6 @@ var historyList = "historyList";var _default =
       // uni.removeStorageSync(historyList)
 
 
-
       wx.removeStorageSync(historyList);
 
 

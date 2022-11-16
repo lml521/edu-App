@@ -10,7 +10,7 @@
 		</scroll-view>
 
 		<scroll-view scroll-y="true" class="right noScorll">
-			<view class="tag" v-for="(ele,i) in labelList" :key="i" @click="handelSearch(ele)">
+			<view class="tag" v-for="(ele,i) in labelList" :key="i" @click.stop="handelSearch(ele)">
 				{{ele.name}}
 			</view>
 
@@ -70,9 +70,6 @@
 				}
 			},
 				searchPageChangeLabel(item){
-			
-							console.log("item=>", item)
-							console.log("value=>", this.value)
 							if(this.value.name !== item.name && this.value.name !== item.cname){
 							
 								// 赋值给搜索面显示名称，如果有分类名就取分类名，没有就取标签名
@@ -81,11 +78,15 @@
 								this.value.id = item.id || null
 								// 分类id (点击`不限`是分类id，)
 								this.value.categoryId = item.categoryId || null
+								this.value.active = false
+								
+								
+								console.log(this.value.active)
 								// 解决父组件，搜索新数据
 								this.$emit('searchByLabel', this.value)
 							}
-							console.log(this.value.active,6666)
 							this.value.active = false
+					
 						},
 
 

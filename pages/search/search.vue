@@ -23,8 +23,19 @@
 		<tabBar v-if="searched" v-model.sync="tabBarId"></tabBar>
 		<!-- 下拉赛选 导航组件 -->
 
-		<downBar v-if="searched" :params="params"></downBar>
+		<!-- <downBar v-if="searched" :params="params" @search="search"></downBar> -->
 		<!-- <view v-for="item in 90">{{item}}</view> -->
+		<!-- <block v-if="searched">
+			<courseList v-show="tabBarId==0" :params="params" :content="content"></courseList>
+			<articleList v-show="tabBarId==1" :params="params" :content="content"></articleList>
+			<questionList v-show="tabBarId==2" :params="params" :content="content"></questionList>
+		</block> -->
+		
+		<block v-if="searched">
+			<courseList  ref="mescrollItem0" :i="0" :index="tabBarId" :params="params" :content="content"></courseList>
+			<articleList ref="mescrollItem1" :i="1" :index="tabBarId" :params="params" :content="content"></articleList>
+			<questionList ref="mescrollItem2" :i="2" :index="tabBarId" :params="params" :content="content"></questionList>
+		</block>
 
 	</view>
 </template>
@@ -33,18 +44,25 @@
 	import keyword from '@/pages/search/components/keyword.vue'; //热门历史关键词提示组件
 
 	import tabBar from '@/components/common/tab-bar.vue'; //tabBar 栏 切换 
-	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
-
-
 
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
 
+	import courseList from "@/pages/search/components/courseList.vue"
+	import articleList from "@/pages/search/components/articleList.vue"
+	import questionList from "@/pages/search/components/questionList.vue"
+
+	import MescrollMoreMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js";
 	export default {
+		mixins: [MescrollMoreMixin],
 		components: {
 			searchInput,
 			tabBar,
-			downBar,
-			keyword
+
+			keyword,
+
+			courseList,
+			articleList,
+			questionList
 		},
 		data() {
 			return {
@@ -70,13 +88,11 @@
 		},
 		// 实时会获取搜索框你们的内容
 		onNavigationBarSearchInputChanged(e) {
-			// console.log(e.text)
 			this.content = e.text
 		},
 
 		// 针对原生搜索框，用户点击软键盘上的“搜索”按钮时触发
 		onNavigationBarSearchInputConfirmed(e) {
-			// console.log('用户点击软键盘上的“搜索”按钮', e.text)
 			// #ifdef APP-PLUS
 			// 失去焦点，收起键盘（有时不会收起）
 			this.currentWebview.setTitleNViewSearchInputFocus(false)
@@ -91,6 +107,9 @@
 		},
 
 		methods: {
+			search(a) {
+				console.log(a, 'a')
+			},
 
 			// 监听 
 			listenerParams(options) {
@@ -99,13 +118,13 @@
 				// #ifdef APP-PLUS
 				this.currentWebview = this.$mp.page.$getAppWebview()
 				// #endif
-				// console.log(JSON.stringify(options), JSON.stringify(options) !== "{}")
+
 				// 判断是否 传递有参数  也就是说 在分类页面 点击 胶囊按钮   有参数进行查询 
 				if (JSON.stringify(options) !== "{}") {
 					// console.log(options, 'options')
 					this.params = options
 					console.log(this.params, 'this.params')
-					
+
 					this.content = options.labelName
 					// 调用设置搜索框值的方法
 					this.handelSetSearchValue()
@@ -118,9 +137,9 @@
 					// #ifdef APP-PLUS
 					// 没有参数,则需要让搜索框获取到焦点
 					this.currentWebview.setTitleNViewSearchInputFocus(true)
-					// console.log(this.currentWebvie'w, 'currentWebview')
 					// #endif
 
+					// 微信小程序 取消焦点 
 					// #ifdef MP-WEIXIN
 					this.focus = true
 					// #endif
@@ -129,13 +148,11 @@
 
 			},
 			handelSetSearchValue(item) {
-				this.handelSetSearch(item)
+				this.handelSetSearch(item) // 点击胶囊按钮 跳转页面  mixins 混入
 			},
 
 			// 搜索  查询 
 			doSearch(obj) {
-				// console.log('搜索')
-				
 				// obj有数据，则获取
 				this.content = obj && obj.value ? obj.value : this.content
 				// 标识搜索过，隐藏keyword.vue组件内容
@@ -186,10 +203,6 @@
 						// #ifndef MP-WEIXIN
 						this.content && uni.setStorageSync(key, [this.content])
 						// #endif 
-
-
-
-
 					}
 				})
 			},

@@ -81,6 +81,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      $event.stopPropagation()
+      $event.preventDefault()
+      return (function() {})($event)
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -114,7 +121,50 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {};exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 =
+{
+  props: {
+    value: {
+      type: [Number, String],
+      default: 0 },
+
+    // tabBar 栏 数据 
+    tabs: {
+      type: Array,
+      default: function _default() {return [
+        {
+          id: 1,
+          name: '课程' },
+        {
+          id: 2,
+          name: '文章' },
+        {
+          id: 3,
+          name: '问答' }];} } },
+
+
+
+
+
+  methods: {
+    // tabBar 切换 
+    handelChangeTab: function handelChangeTab(index) {
+      this.$emit('input', index);
+    } } };exports.default = _default2;
 
 /***/ }),
 

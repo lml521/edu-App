@@ -2705,8 +2705,9 @@ function normalizeComponent (
 
 
     handelSetSearch: function handelSetSearch(item) {
-      // 点击胶囊按钮 跳转页面 未能获取 dom节点
-      this.$nextTick(function () {
+      if (item) {
+        // 点击胶囊按钮 跳转页面 未能获取 dom节点
+        this.$nextTick(function () {
 
 
 
@@ -2718,7 +2719,9 @@ function normalizeComponent (
 
 
 
-      });
+        });
+      }
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

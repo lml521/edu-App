@@ -1,6 +1,7 @@
 <!-- @touchmove.stop.prevent 禁止滚动 -->
 <template>
 	<view class="down-bar row sticky-box" @touchmove.stop.prevent="()=>{}">
+	    
 		<view class="one" v-for="(item,index) in downBarList" :key="index" @click="handelSort(item)">
 			<view class="center " :class="{active : item.active || (item.id)}">
 				<text>{{item.name}}</text>
@@ -11,28 +12,14 @@
 
 			<view class="item-list" v-show="item.active">
 				<classify v-if="item.isCategory" class="category" :value="item" @searchByLabel="searchByLabel">
-
 				</classify>
 				<view class="name" v-else v-for="(e,i) in item.list" :key="i" @click="handelChangeSort(item,e)"
 					:class="{active:activeSortName==e.name}">{{e.name}}</view>
-
 			</view>
 
 			<!-- 蒙层 -->
 			<view class="cover" v-show="item.active"></view>
 		</view>
-
-		<!-- 	<view class="one">
-			<view class="center">
-				<text>全部分类</text>
-				<text class="iconfont icon-down1"></text>
-				 <text class="iconfont icon-up"></text>
-			</view>
-			<view class="item-list">
-
-			</view>
-		</view> -->
-		<!-- <view v-for="item in 90">{{item}}</view> -->
 	</view>
 </template>
 
@@ -95,11 +82,9 @@
 					if (newVal) {
 						console.log(newVal)
 						const obj = this.downBars[this.downBars.length - 1]
-						console.log(obj,'00000000000000000')
 						obj.name = newVal.labelName
 						obj.id = newVal.labelId
 						obj.activeIndex = newVal.activeIndex
-						console.log(obj,'obj')
 					}
 					
 				},
@@ -110,9 +95,7 @@
 		methods: {
 			// 切换下拉组件
 			handelSort(item) {
-				console.log(item, 1)
 				this.activeSortName = item.name
-
 				// for循环 总数据  判断当前点击的这一项active是否为true 如果不是则定义true  
 				this.downBarList.forEach(i => {
 					i.active = (item.type == i.type) ? !i.active : false
@@ -126,7 +109,6 @@
 				// if(item.name==ele.name) return 
 				item.name = ele.name
 				item.id = ele.id
-				console.log(item)
 				this.$emit("search", {
 					[item.type]: item.id
 				})

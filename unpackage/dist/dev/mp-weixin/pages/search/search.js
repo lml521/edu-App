@@ -155,7 +155,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var keyword = function keyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/keyword */ "pages/search/components/keyword").then((function () {return resolve(__webpack_require__(/*! @/pages/search/components/keyword.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | components/common/tab-bar */ "components/common/tab-bar").then((function () {return resolve(__webpack_require__(/*! @/components/common/tab-bar.vue */ 139));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchInput = function searchInput() {__webpack_require__.e(/*! require.ensure | components/search-input/search-input */ "components/search-input/search-input").then((function () {return resolve(__webpack_require__(/*! @/components/search-input/search-input.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var keyword = function keyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/keyword */ "pages/search/components/keyword").then((function () {return resolve(__webpack_require__(/*! @/pages/search/components/keyword.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | components/common/tab-bar */ "components/common/tab-bar").then((function () {return resolve(__webpack_require__(/*! @/components/common/tab-bar.vue */ 139));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchInput = function searchInput() {__webpack_require__.e(/*! require.ensure | components/search-input/search-input */ "components/search-input/search-input").then((function () {return resolve(__webpack_require__(/*! @/components/search-input/search-input.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var courseList = function courseList() {__webpack_require__.e(/*! require.ensure | pages/search/components/courseList */ "pages/search/components/courseList").then((function () {return resolve(__webpack_require__(/*! @/pages/search/components/courseList.vue */ 146));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var articleList = function articleList() {__webpack_require__.e(/*! require.ensure | pages/search/components/articleList */ "pages/search/components/articleList").then((function () {return resolve(__webpack_require__(/*! @/pages/search/components/articleList.vue */ 151));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var questionList = function questionList() {__webpack_require__.e(/*! require.ensure | pages/search/components/questionList */ "pages/search/components/questionList").then((function () {return resolve(__webpack_require__(/*! @/pages/search/components/questionList.vue */ 156));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -188,20 +188,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//小程序中搜索
-var _default = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
   components: {
     searchInput: searchInput,
     tabBar: tabBar,
-    keyword: keyword },
+
+    keyword: keyword,
+
+    courseList: courseList,
+    articleList: articleList,
+    questionList: questionList },
 
   data: function data() {
     return {
       params: null,
       content: "", //搜索内容
       focus: false, //搜索框是否聚焦
-      searched: false };
-
+      searched: false,
+      tabBarId: 0 //tabBar 栏选中的 
+    };
 
 
 
@@ -218,13 +239,11 @@ var _default = {
   },
   // 实时会获取搜索框你们的内容
   onNavigationBarSearchInputChanged: function onNavigationBarSearchInputChanged(e) {
-    console.log(e.text);
     this.content = e.text;
   },
 
   // 针对原生搜索框，用户点击软键盘上的“搜索”按钮时触发
   onNavigationBarSearchInputConfirmed: function onNavigationBarSearchInputConfirmed(e) {
-    // console.log('用户点击软键盘上的“搜索”按钮', e.text)
 
 
 
@@ -239,6 +258,9 @@ var _default = {
   },
 
   methods: {
+    search: function search(a) {
+      console.log(a, 'a');
+    },
 
     // 监听 
     listenerParams: function listenerParams(options) {
@@ -247,14 +269,16 @@ var _default = {
 
 
 
-      console.log(JSON.stringify(options), JSON.stringify(options) !== "{}");
+
       // 判断是否 传递有参数  也就是说 在分类页面 点击 胶囊按钮   有参数进行查询 
       if (JSON.stringify(options) !== "{}") {
-        console.log(options, 'options');
+        // console.log(options, 'options')
         this.params = options;
+        console.log(this.params, 'this.params');
+
         this.content = options.labelName;
         // 调用设置搜索框值的方法
-        this.handelSetSearchValue(options.labelName);
+        this.handelSetSearchValue();
         // 调用搜索查询的方法的
         this.doSearch({
           value: options.labelName });
@@ -266,7 +290,7 @@ var _default = {
 
 
 
-
+        // 微信小程序 取消焦点 
 
         this.focus = true;
 
@@ -275,12 +299,11 @@ var _default = {
 
     },
     handelSetSearchValue: function handelSetSearchValue(item) {
-      this.handelSetSearch(item);
+      this.handelSetSearch(item); // 点击胶囊按钮 跳转页面  mixins 混入
     },
 
     // 搜索  查询 
     doSearch: function doSearch(obj) {
-      console.log('搜索');
       // obj有数据，则获取
       this.content = obj && obj.value ? obj.value : this.content;
       // 标识搜索过，隐藏keyword.vue组件内容
@@ -326,10 +349,6 @@ var _default = {
 
 
           _this.content && wx.setStorageSync(key, [_this.content]);
-
-
-
-
 
 
 
