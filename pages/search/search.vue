@@ -23,19 +23,10 @@
 		<tabBar v-if="searched" v-model.sync="tabBarId"></tabBar>
 		<!-- 下拉赛选 导航组件 -->
 
-		<!-- <downBar v-if="searched" :params="params" @search="search"></downBar> -->
-		<!-- <view v-for="item in 90">{{item}}</view> -->
-		<!-- <block v-if="searched">
-			<courseList v-show="tabBarId==0" :params="params" :content="content"></courseList>
-			<articleList v-show="tabBarId==1" :params="params" :content="content"></articleList>
-			<questionList v-show="tabBarId==2" :params="params" :content="content"></questionList>
-		</block> -->
-
 		<block v-if="searched">
 			<courseList ref="mescrollItem0" :i="0" :index="tabBarId" :params="params" :content="content"></courseList>
 			<articleList ref="mescrollItem1" :i="1" :index="tabBarId" :params="params" :content="content"></articleList>
-			<questionList ref="mescrollItem2" :i="2" :index="tabBarId" :params="params" :content="content">
-			</questionList>
+			<questionList ref="mescrollItem2" :i="2" :index="tabBarId" :params="params" :content="content"></questionList>
 		</block>
 
 	</view>
@@ -108,10 +99,7 @@
 		},
 
 		methods: {
-			search(a) {
-				console.log(a, 'a')
-			},
-
+			
 			// 监听 
 			listenerParams(options) {
 
@@ -172,11 +160,6 @@
 						this.$refs[`mescrollItem${this.tabBarId}`].search()
 					})
 				})
-
-
-
-
-				// uni.showLoading()
 			},
 
 
@@ -217,8 +200,6 @@
 					}
 				})
 			},
-
-
 		}
 	}
 </script>

@@ -11,29 +11,33 @@
 		 downCallback 下拉刷新的回调 可以不写，mixins已默认，
 		 会调用upCallback上拉加载方法，统一在upCallback中实现查询逻辑
 		 -->
+		
 		 <mescroll-body 
-		 :ref="'mescrollRef'+i" 
+		 ref="mescrollRef" 
 		 @init="mescrollInit" 
 		 @down="downCallback"
 		 @up="upCallback" 
 		 :down="downOption" 
 		 :up="upOption">
-		 
+		 <articleItem  v-for="(item,index ) in articleList" :key="index" :item="item">
+
+		 </articleItem>
 		 </mescroll-body>
 	
 	</view>
 </template>
 
 <script>
-	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
 	
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
-	
-	 import MescrollMoreItemMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more-item.js";
+	import indexApi from '@/api/index.js'
+	import MescrollMoreItemMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more-item.js";	import articleItem from "@/components/article-item/article-item.vue"
+	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
 	export default {
 		mixins: [MescrollMixin, MescrollMoreItemMixin], // 注意此处还需使用MescrollMoreItemMixin (必须写在MescrollMixin后面)
 		components: {
 			downBar,
+			articleItem
 		},
 		props: {
 			i:{
@@ -53,6 +57,12 @@
 				default: '',
 			},
 		},
+		mounted() {
+				this.params && Object.keys(this.searchData).forEach(key=>{
+					this.searchData[key] = this.params[key] || null
+				})
+				console.log("search=>",this.searchData)
+			},
 		data(){
 			return {
 				downOption:{
@@ -63,20 +73,56 @@
 					noMoreSize: 4, 
 					empty:{
 					  tip : "暂无相关数据",
+					  icon: ""
 					}
 				},
+				
+				// 文章数据
+				articleList:[],
+				// 用来保存搜索的参数
+				searchData: {
+					content: '', // 要查询的内容
+					current: 1, // 分页的页码
+					size: 10, // 分页的条数
+					sort: null, // 排序
+					isFree: null, // 0 付费 1免费 null 全部课程
+					labelId: null, // 标签id
+					categoryId: null // 类别id
+				}
 			}
 		},
+		created() {
+			this.search()
+		},
 		methods: {
-			// 搜索
-			search(data) {
-				console.log('data 搜索数据',data)
-			},
-			// 上拉加载 回调
-			upCallback(page){
-				console.log('page上拉加载 回调',page)
-				
+			
+		// 搜索
+		search(data) {
+			console.log(data,'data')
+			if(data){
+				Object.assign(this.searchData, data)
 			}
+			// this.mescroll.resetUpScroll(true) // 每次搜索 先从第一页开始
+		},
+		// 上拉加载 回调
+		async upCallback(page) {
+			
+			// this.searchData.content = this.content && this.content.trim() || ""
+			// this.searchData.current = page.num
+			// this.searchData.size = page.size
+				let res = await indexApi.getArticleList(this.searchData)
+				const list = res.data.records
+				console.log(page,page.num,888)
+				if(page.num==1){
+					this.articleList=[],
+					this.mescroll.scrollTo(0,0)
+				}
+				
+				this.articleList=this.articleList.concat(list)
+				console.log(this.articleList.length,res.data.total,'7777777')
+			    this.mescroll.endBySize(this.articleList.length,res.data.total)
+			// this.mescroll.endSuccess(0) // 关闭 下拉搜索
+		}
 		}
 	}
 </script>

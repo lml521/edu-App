@@ -1,7 +1,6 @@
 <template>
 	<!-- 课程 -->
 	<view v-show="i === index">
-
 		<!-- 下拉筛选组件 -->
 		<downBar @search="search" :params="params" :downBars="downBarlist"></downBar>
 		<!-- 加载数据列表 -->
@@ -11,11 +10,13 @@
 		 downCallback 下拉刷新的回调 可以不写，mixins已默认，
 		 会调用upCallback上拉加载方法，统一在upCallback中实现查询逻辑
 		 -->
-		<mescroll-body :ref="'mescrollRef'+i" @init="mescrollInit" @down="downCallback" @up="upCallback"
-			:down="downOption" :up="upOption">
-			<!-- <view style="padding: 0 30rpx;">
-				<view v-for="item in 90">{{item}}</view>
-			</view> -->
+		<mescroll-body 
+		:ref="'mescrollRef'+i" 
+		@init="mescrollInit" 
+		@down="downCallback" 
+		@up="upCallback"
+		:down="downOption" 
+		:up="upOption">
 			<courseItem v-for="(item,index) in courseList" :key="index" :item="item"></courseItem>
 		</mescroll-body>
 
@@ -115,9 +116,6 @@
 					
 					this.courseList=this.courseList.concat(list)
 				    this.mescroll.endBySize(this.courseList.length,res.data.total)
-				
-
-				
 				// this.mescroll.endSuccess(0) // 关闭 下拉搜索
 			}
 		}
