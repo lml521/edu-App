@@ -54,7 +54,7 @@ const MescrollMoreItemMixin = {
 			this.isInit = true; // 标记为true
 			if (this.mescroll) {
 				if (this.mescroll.optDown.use) {
-					this.mescroll.triggerDownScroll();
+					// this.mescroll.triggerDownScroll();
 				} else{
 					this.mescroll.triggerUpScroll();
 				}

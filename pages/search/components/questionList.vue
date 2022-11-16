@@ -68,10 +68,16 @@
 		}
 	},
 		methods: {
-			// 搜索
-			search(data) {
-
-			}
+		// 搜索
+		search(data) {
+			console.log(data)
+		},
+		
+		// 上拉加载 回调 
+		upCallback(page){
+			console.log('page',page)
+			
+		}
 		}
 	}
 </script>

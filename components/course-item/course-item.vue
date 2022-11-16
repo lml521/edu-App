@@ -37,7 +37,23 @@
 
 			item: {
 				type: Object,
-				default: () => {}
+				default: () => {
+					return {
+					commTotal: 201,
+					id: 10,
+					isFree: 1,
+					mainImage: "/static/images/banner2.jpg",
+					nickName: "梦老师",
+					priceDiscount: 156.36,
+					priceOriginal: 576.66,
+					studyTotal: 464,
+					title: "于什他习第样三般员军们华。",
+					totalTime: "07:04:44",
+					userId: 12,
+					userImage: "http://dummyimage.com/120x240"
+				}
+					
+				}
 			}
 		},
 		data() {

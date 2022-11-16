@@ -156,7 +156,6 @@
 						url: `/pages/public/web-view?url=${res[1].result}`
 					})
 				} catch (e) {
-					//TODO handle the exception
 					console.log(e);
 				}
 			},

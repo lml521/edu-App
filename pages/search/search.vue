@@ -30,11 +30,12 @@
 			<articleList v-show="tabBarId==1" :params="params" :content="content"></articleList>
 			<questionList v-show="tabBarId==2" :params="params" :content="content"></questionList>
 		</block> -->
-		
+
 		<block v-if="searched">
-			<courseList  ref="mescrollItem0" :i="0" :index="tabBarId" :params="params" :content="content"></courseList>
+			<courseList ref="mescrollItem0" :i="0" :index="tabBarId" :params="params" :content="content"></courseList>
 			<articleList ref="mescrollItem1" :i="1" :index="tabBarId" :params="params" :content="content"></articleList>
-			<questionList ref="mescrollItem2" :i="2" :index="tabBarId" :params="params" :content="content"></questionList>
+			<questionList ref="mescrollItem2" :i="2" :index="tabBarId" :params="params" :content="content">
+			</questionList>
 		</block>
 
 	</view>
@@ -157,13 +158,23 @@
 				this.content = obj && obj.value ? obj.value : this.content
 				// 标识搜索过，隐藏keyword.vue组件内容
 				this.searched = true
+				
+				// // #ifdef MP-WEIXIN
+				//  // 传递给小程序 搜索框, 注意上面取 `ref="searchBar"`
+				//  this.$refs.searchBar.searchVal = this.content
+				//  // #endif
 
-
-				// 调用设置搜索框值的方法
-				// this.handleSetSearchValue(options.labelName)
-
-				// 调用搜索查询的方法的
+				// 关键字保留本地 
 				this.storageHistory()
+				// 节流 搜索 
+				this.$nextTick(() => {
+					this.$util.throttle(() => {
+						this.$refs[`mescrollItem${this.tabBarId}`].search()
+					})
+				})
+
+
+
 
 				// uni.showLoading()
 			},

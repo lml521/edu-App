@@ -23,10 +23,8 @@
 						,
 						"buttons": [ //按钮 扫一扫,只有app才有， 注意最前面放逗号,
 							{
-
 								"float": "right",
 								"fontSize": "27",
-
 								"background": "rgba(0,0,0,0)",
 								"fontSrc": "/static/icon/iconfont.ttf",
 								"text": "\ue689"

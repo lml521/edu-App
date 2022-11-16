@@ -52,15 +52,12 @@
 		methods: {
 			// 获取 分类数据 
 			async getClassifyList() {
-				console.log('123456789')
 				let res = await indexApi.getNavList()
 				this.classifyList = res.data
 				this.labelList = res.data[this.activeIndex].labelList
-				console.log(this.classifyList, this.labelList)
-				
+			
 				// 判断是否 点击了全部分类 展示的分类页面  
 				//  如果是 需要添加一个  "全部分类"  每一项中添加一个  "不限"
-				console.log(this.value)
 				if(this.value){
 					this.classifyList.forEach(item=>{
 						item.labelList.unshift({id : null, name : "不限", cname : item.name,categoryId: item.id})
@@ -78,10 +75,6 @@
 								this.value.id = item.id || null
 								// 分类id (点击`不限`是分类id，)
 								this.value.categoryId = item.categoryId || null
-								this.value.active = false
-								
-								
-								console.log(this.value.active)
 								// 解决父组件，搜索新数据
 								this.$emit('searchByLabel', this.value)
 							}

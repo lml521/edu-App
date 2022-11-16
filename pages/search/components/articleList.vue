@@ -70,7 +70,12 @@
 		methods: {
 			// 搜索
 			search(data) {
-
+				console.log('data 搜索数据',data)
+			},
+			// 上拉加载 回调
+			upCallback(page){
+				console.log('page上拉加载 回调',page)
+				
 			}
 		}
 	}
@@ -82,6 +87,4 @@
 		min-height: 1087rpx !important;
 		height: 100% !important;
 	}
-	
-	
 </style>

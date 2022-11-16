@@ -145,7 +145,7 @@
 		right: 0;
 
 		.name {
-			padding-left: 80rpx;
+			padding-left: 50rpx;
 		}
 
 		.category {
