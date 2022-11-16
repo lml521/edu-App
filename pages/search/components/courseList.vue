@@ -58,6 +58,12 @@
 				default: '',
 			},
 		},
+			mounted() {
+					this.params && Object.keys(this.searchData).forEach(key=>{
+						this.searchData[key] = this.params[key] || null
+					})
+					console.log("search=>",this.searchData)
+				},
 		data() {
 			return {
 				// 下拉菜单 数据 
@@ -71,7 +77,6 @@
 					empty: {
 						tip: "暂无相关数据",
 						icon: ""
-
 					}
 				},
 				courseList: [],
@@ -90,16 +95,17 @@
 		methods: {
 			// 搜索
 			search(data) {
-				console.log(data, this.content, 6)
+				if(data){
+					Object.assign(this.searchData, data)
+				}
 				this.mescroll.resetUpScroll(true) // 每次搜索 先从第一页开始
 			},
 			// 上拉加载 回调
 			async upCallback(page) {
-				console.log('page', page)
-
-				
-					let res = await indexApi.getCourseList(this.courseList)
-					console.log('res', res)
+				this.searchData.content = this.content && this.content.trim() || ""
+				this.searchData.current = page.num
+				this.searchData.size = page.size
+					let res = await indexApi.getCourseList(this.searchData)
 					const list = res.data.records
 					
 					if(page.num==1){
@@ -108,10 +114,7 @@
 					}
 					
 					this.courseList=this.courseList.concat(list)
-					
-					
-					
-					this.mescroll.endBySize(this.courseList.length,res.data.total)
+				    this.mescroll.endBySize(this.courseList.length,res.data.total)
 				
 
 				

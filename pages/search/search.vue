@@ -122,7 +122,7 @@
 
 				// 判断是否 传递有参数  也就是说 在分类页面 点击 胶囊按钮   有参数进行查询 
 				if (JSON.stringify(options) !== "{}") {
-					// console.log(options, 'options')
+					console.log(options, 'options')
 					this.params = options
 					console.log(this.params, 'this.params')
 
