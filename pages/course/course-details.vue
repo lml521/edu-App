@@ -1,12 +1,10 @@
 <template>
 	<view v-cloak>
 		<courseHeader :item="courseData"></courseHeader>
-
 		<view class="course-details" :style="{height : pageHeight + 'px'}">
 			<tabBar :tabs="list" v-model="index"></tabBar>
 			<swiper class="swiper-box" :current="index" circular @change="changeCurrwnt">
 				<swiper-item v-for="(item,i) in 4" :key="i">
-
 					<scroll-view upper-threshold="0" @scrolltoupper="scrolltoupper" class="scroll-view"
 						:scroll-y="enableScroll">
 						<view class="details-info">
@@ -14,18 +12,15 @@
 							<courseInfo v-if="index === 0" :detailUrls="detailUrls"></courseInfo>
 							<courseDir v-else-if="index === 1" :chapterList="chapterList"></courseDir>
 							<courseComment v-else-if="index === 2" :commentList="commentList"></courseComment>
-							<courseGroup v-else-if="index === 3"></courseGroup>
+							<courseGroup v-else-if="index === 3" :groupList="groupList"></courseGroup>
 						</view>
 					</scroll-view>
 				</swiper-item>
-
 			</swiper>
 		</view>
-
 		<view class="BuyNow">
 			<button class="button">立即购买</button>
 		</view>
-
 	</view>
 </template>
 
@@ -38,7 +33,7 @@
 	import courseDir from "@/pages/course/components/course-dir.vue"
 	import courseComment from "@/pages/course/components/course-comment.vue"
 	import courseGroup from "@/pages/course/components/course-group.vue"
-	
+
 	import courseApi from '@/api/course.js'
 	export default {
 		components: {
@@ -57,11 +52,11 @@
 				enableScroll: false,
 				detailTop: 0,
 				statusNavHeight: 0, // 状态栏  +  导航栏的高度
-				
-				courseData:[],//详情页头部信息
-				detailUrls:[],//详情页数据 
-				chapterList:[],//章节数据
-				commentList:[],//评论数据
+				courseData: {}, //详情页头部信息
+				detailUrls: [], //详情页数据 
+				chapterList: [], //章节数据
+				commentList: [], //评论数据
+				groupList:[],//套餐
 			};
 		},
 
@@ -76,30 +71,37 @@
 			this.getCourseList()
 			this.getChapterList()
 			this.getCommentList()
+			this.getGroupList()
 		},
 		methods: {
-			
+
 			// 请求 详情 信息 
-		async	getCourseList (){
-			let res =await courseApi.courseList()
-			this.courseData=res.data
-			this.detailUrls=res.data.detailUrls
+			async getCourseList() {
+				let res = await courseApi.courseList()
+				this.courseData = res.data
+				this.detailUrls = res.data.detailUrls
 			},
-			
+
 			// 请求章节 
-			async getChapterList(){
-				let res =await courseApi.chapterList()
-				this.chapterList=res.data
+			async getChapterList() {
+				let res = await courseApi.chapterList()
+				this.chapterList = res.data
 			},
-			
+
 			// 获取 评论 数据 
-			async getCommentList(){
-				let res= await courseApi.commentList()
-				this.commentList=res.data
-				
+			async getCommentList() {
+				let res = await courseApi.commentList()
+				this.commentList = res.data
 			},
 			
-			
+			// 获取 套餐 数据 
+			async getGroupList(){
+				console.log(123)
+				let res = await courseApi.groupList()
+				this.groupList = res.data
+			},
+
+
 			// 改变 当前 轮播 
 			changeCurrwnt(event) {
 				this.index = event.detail.current
@@ -144,9 +146,10 @@
 </script>
 
 <style lang="scss">
-	[v-cloak]{
+	[v-cloak] {
 		display: none;
 	}
+
 	.course-details {
 		overflow: hidden;
 

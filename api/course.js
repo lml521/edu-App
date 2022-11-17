@@ -26,8 +26,18 @@ const commentList =()=>{
 	})
 }
 
+// 套餐数据 
+// /course/api/group/list/null
+const groupList =()=>{
+	return request({
+		url:"/course/api/group/list/null",
+		method: "GET",
+	})
+}
+
 export default{
 	courseList,
 	chapterList,
 	commentList,
+	groupList,
 }
