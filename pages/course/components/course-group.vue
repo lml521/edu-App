@@ -1,6 +1,9 @@
 <template>
-	<view>
-		套餐
+	<!-- 套餐 -->
+	<view class="group">
+		
+		
+		
 	</view>
 </template>
 

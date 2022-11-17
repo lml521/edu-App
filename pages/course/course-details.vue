@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<courseHeader></courseHeader>
+	<view v-cloak>
+		<courseHeader :item="courseData"></courseHeader>
 
 		<view class="course-details" :style="{height : pageHeight + 'px'}">
 			<tabBar :tabs="list" v-model="index"></tabBar>
@@ -11,9 +11,9 @@
 						:scroll-y="enableScroll">
 						<view class="details-info">
 							<!-- <view v-for="(item,index) in 90">123</view> -->
-							<courseInfo v-if="index === 0"></courseInfo>
-							<courseDir v-else-if="index === 1"></courseDir>
-							<courseComment v-else-if="index === 2"></courseComment>
+							<courseInfo v-if="index === 0" :detailUrls="detailUrls"></courseInfo>
+							<courseDir v-else-if="index === 1" :chapterList="chapterList"></courseDir>
+							<courseComment v-else-if="index === 2" :commentList="commentList"></courseComment>
 							<courseGroup v-else-if="index === 3"></courseGroup>
 						</view>
 					</scroll-view>
@@ -21,6 +21,11 @@
 
 			</swiper>
 		</view>
+
+		<view class="BuyNow">
+			<button class="button">立即购买</button>
+		</view>
+
 	</view>
 </template>
 
@@ -28,15 +33,21 @@
 	import courseHeader from "@/pages/course/components/course-header.vue"; //详情页面 头部
 	import tabBar from '@/components/common/tab-bar.vue'; //tabBar 组件
 	import list from '@/config/course-details-tabs.js'
-	
+
 	import courseInfo from "@/pages/course/components/course-info.vue"
 	import courseDir from "@/pages/course/components/course-dir.vue"
 	import courseComment from "@/pages/course/components/course-comment.vue"
 	import courseGroup from "@/pages/course/components/course-group.vue"
+	
+	import courseApi from '@/api/course.js'
 	export default {
 		components: {
 			courseHeader,
-			tabBar,courseInfo,courseDir,courseComment,courseGroup
+			tabBar,
+			courseInfo,
+			courseDir,
+			courseComment,
+			courseGroup
 		},
 		data() {
 			return {
@@ -46,6 +57,11 @@
 				enableScroll: false,
 				detailTop: 0,
 				statusNavHeight: 0, // 状态栏  +  导航栏的高度
+				
+				courseData:[],//详情页头部信息
+				detailUrls:[],//详情页数据 
+				chapterList:[],//章节数据
+				commentList:[],//评论数据
 			};
 		},
 
@@ -56,7 +72,34 @@
 		onReachBottom() { // 默认滚动到页面据底部还有50的时候会触发onReachBottom
 			this.enableScroll = true
 		},
+		created() {
+			this.getCourseList()
+			this.getChapterList()
+			this.getCommentList()
+		},
 		methods: {
+			
+			// 请求 详情 信息 
+		async	getCourseList (){
+			let res =await courseApi.courseList()
+			this.courseData=res.data
+			this.detailUrls=res.data.detailUrls
+			},
+			
+			// 请求章节 
+			async getChapterList(){
+				let res =await courseApi.chapterList()
+				this.chapterList=res.data
+			},
+			
+			// 获取 评论 数据 
+			async getCommentList(){
+				let res= await courseApi.commentList()
+				this.commentList=res.data
+				
+			},
+			
+			
 			// 改变 当前 轮播 
 			changeCurrwnt(event) {
 				this.index = event.detail.current
@@ -101,6 +144,9 @@
 </script>
 
 <style lang="scss">
+	[v-cloak]{
+		display: none;
+	}
 	.course-details {
 		overflow: hidden;
 
@@ -111,6 +157,27 @@
 
 		.details-info {
 			padding-bottom: 180rpx;
+		}
+	}
+
+	.BuyNow {
+		width: 100%;
+		height: 100rpx;
+		background-color: #fff;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.button {
+			width: 90%;
+			margin: auto;
+			border-radius: 40rpx;
+			height: 80%;
+			color: #fff;
+			background-color: #345dc2;
 		}
 	}
 </style>
