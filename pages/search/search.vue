@@ -3,7 +3,7 @@
 		<!-- 搜索 -->
 		<!-- 小程序中搜索 -->
 		<!-- #ifdef MP-WEIXIN -->
-		<uni-search-bar v-model="content" :focus="focus" placeholder="搜索你想要的内容" @confirm="handleSearch"
+		<uni-search-bar v-model="content" :focus="focus" placeholder="搜索你想要的内容" @confirm="doSearch"
 			@cancel="navBack()" radius="100" clearButton="auto" cancelButton="always">
 			<template v-slot:searchIcon>
 				<text class="iconfont icon-search"></text>
@@ -11,14 +11,10 @@
 			<template v-slot:clearIcon>
 				<text class="iconfont icon-roundclosefill"></text>
 			</template>
-
 		</uni-search-bar>
 		<!-- #endif -->
-
-
 		<!-- 热门历史关键词提示组件 -->
 		<keyword @doSearch="doSearch" v-if="!searched"></keyword>
-
 		<!-- tabBar 栏 切换 -->
 		<tabBar v-if="searched" v-model.sync="tabBarId"></tabBar>
 		<!-- 下拉赛选 导航组件 -->
@@ -118,9 +114,7 @@
 					// 调用设置搜索框值的方法
 					this.handelSetSearchValue()
 					// 调用搜索查询的方法的
-					this.doSearch({
-						value: options.labelName
-					})
+					this.doSearch()
 				} else {
 					// 在APP中 如果没有传递参数 则 搜索框聚焦
 					// #ifdef APP-PLUS
@@ -153,13 +147,14 @@
 				//  // #endif
 
 				// 关键字保留本地 
-				this.storageHistory()
+				
 				// 节流 搜索 
 				this.$nextTick(() => {
 					this.$util.throttle(() => {
 						this.$refs[`mescrollItem${this.tabBarId}`].search()
 					})
 				})
+				this.storageHistory()
 			},
 
 

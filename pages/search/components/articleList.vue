@@ -1,36 +1,32 @@
 <template>
-	<!-- 课程 -->
+	<!--文章-->
 	<view v-show="i === index">
 		<!-- 下拉筛选组件 -->
-		<downBar @search="search" :params="params"></downBar>
-		<!-- 加载数据列表 -->
-		<!-- ref动态生成: 字节跳动小程序编辑器不支持一个页面存在相同的ref (如不考虑字节跳动小程序
-		 可固定值为 ref="mescrollRef")
-		 downOption 和 upOption 在 mescroll-more-item.js 已经定义了,页面中可不定义
-		 downCallback 下拉刷新的回调 可以不写，mixins已默认，
-		 会调用upCallback上拉加载方法，统一在upCallback中实现查询逻辑
-		 -->
-		<mescroll-body 
+		<downBar @search="search" :params="params" ></downBar>
+			<mescroll-body 
 		:ref="'mescrollRef'+i" 
 		@init="mescrollInit" 
 		@down="downCallback" 
 		@up="upCallback"
 		:down="downOption" 
 		:up="upOption">
-			 <articleItem v-for="(item,index) in articleList" :key="index" :item="item"></articleItem>
-		</mescroll-body> 
+		
+			<articleItem v-for="(item,index) in articleList" :key="index" :item="item"></articleItem>
+		</mescroll-body>
 
 	</view>
 </template>
 
 <script>
 	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
+	import downBarlist from '@/config/course-down-bar.js'; // 下拉菜单 数据 
 
 	import articleItem from '@/components/article-item/article-item.vue' //每一项 item
 	import indexApi from '@/api/index.js'; //请求接口
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import MescrollMoreItemMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more-item.js";
 
+	
 
 	export default {
 		mixins: [MescrollMixin, MescrollMoreItemMixin], // 注意此处还需使用MescrollMoreItemMixin (必须写在MescrollMixin后面)
@@ -58,10 +54,15 @@
 				default: '',
 			},
 		},
-
+			// mounted() {
+			// 		this.params && Object.keys(this.searchData).forEach(key=>{
+			// 			this.searchData[key] = this.params[key] || null
+			// 		})
+			// 		console.log("search=>",this.searchData)
+			// 	},
 		data() {
 			return {
-				
+			
 				downOption: {
 					auto: false,
 				},
@@ -89,8 +90,10 @@
 		methods: {
 			// 搜索
 			search(data) {
-				console.log(data,'data')
-				this.mescroll.resetUpScroll(true) // 每次搜索 先从第一页开始
+				// if(data){
+				// 	Object.assign(this.searchData, data)
+				// }
+				// this.mescroll.resetUpScroll(true) // 每次搜索 先从第一页开始
 			},
 			// 上拉加载 回调
 			async upCallback(page) {
@@ -99,15 +102,15 @@
 				// this.searchData.size = page.size
 					let res = await indexApi.getArticleList(this.searchData)
 					const list = res.data.records
-					console.log(page,'page')
+					console.log(res.data.records)
 					if(page.num==1){
 						this.articleList=[],
 						this.mescroll.scrollTo(0,0)
 					}
+					
 					this.articleList=this.articleList.concat(list)
-					console.log(this.articleList.length,res.data.total,666)
 				    this.mescroll.endBySize(this.articleList.length,res.data.total)
-
+				// this.mescroll.endSuccess(0) // 关闭 下拉搜索
 			}
 		}
 	}

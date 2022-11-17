@@ -1,7 +1,6 @@
 <!-- @touchmove.stop.prevent 禁止滚动 -->
 <template>
 	<view class="down-bar row sticky-box" @touchmove.stop.prevent="()=>{}">
-	    
 		<view class="one" v-for="(item,index) in downBarList" :key="index" @click="handelSort(item)">
 			<view class="center " :class="{active : item.active || (item.id)}">
 				<text>{{item.name}}</text>
@@ -75,6 +74,9 @@
 		},
 		created() {
 			this.downBarList = this.downBars
+		},
+		updated(){
+			
 		},
 		watch: {
 			params: {

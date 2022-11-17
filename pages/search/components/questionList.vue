@@ -1,27 +1,9 @@
 <template>
 		<!-- 问答 -->
-		<view v-show="i === index">
+		<view class="">
 			
-		 <!-- 下拉筛选组件 -->
-		 <downBar @search="search" :params="params"></downBar> 
-		 <!-- 加载数据列表 -->
-		 <!-- ref动态生成: 字节跳动小程序编辑器不支持一个页面存在相同的ref (如不考虑字节跳动小程序
-		 可固定值为 ref="mescrollRef")
-		 downOption 和 upOption 在 mescroll-more-item.js 已经定义了,页面中可不定义
-		 downCallback 下拉刷新的回调 可以不写，mixins已默认，
-		 会调用upCallback上拉加载方法，统一在upCallback中实现查询逻辑
-		 -->
-		 <mescroll-body 
-		 :ref="'mescrollRef'+i" 
-		 @init="mescrollInit" 
-		 @down="downCallback"
-		 @up="upCallback" 
-		 :down="downOption" 
-		 :up="upOption">
-		 
-		 </mescroll-body>
-	
-	</view>
+		</view>
+		
 </template>
 
 <script>
