@@ -15,7 +15,7 @@
 		>
 		<swiper-item class="swiper-item" 
 		v-for="item in bannerList" :key="item.id">
-			<img class="swiper-img"
+			<img class="swiper-img" @click="navTo(`${item.advertUrl}`)"
 			 :src="item.imageUrl" />
 		</swiper-item>
 		</swiper>

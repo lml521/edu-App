@@ -106,7 +106,7 @@
 
 			// 点击 综合排序 
 			handelChangeSort(item, ele) {
-				// if(item.name==ele.name) return 
+				if(item.name==ele.name) return 
 				item.name = ele.name
 				item.id = ele.id
 				this.$emit("search", {
