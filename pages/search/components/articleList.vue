@@ -3,7 +3,7 @@
 	<view v-show="i === index">
 		<!-- 下拉筛选组件 -->
 		<downBar @search="search" :params="params" ></downBar>
-			<mescroll-body 
+		<mescroll-body 
 		:ref="'mescrollRef'+i" 
 		@init="mescrollInit" 
 		@down="downCallback" 

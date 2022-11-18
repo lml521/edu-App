@@ -10,7 +10,7 @@
 						<view class="details-info">
 							<!-- <view v-for="(item,index) in 90">123</view> -->
 							<courseInfo v-if="index === 0" :detailUrls="detailUrls"></courseInfo>
-							<courseDir v-else-if="index === 1" :chapterList="chapterList"></courseDir>
+							<courseDir v-else-if="index === 1" :chapterList="chapterList" @handlePlayVideo="handlePlayVideo"></courseDir>
 							<courseComment v-else-if="index === 2" :commentList="commentList"></courseComment>
 							<courseGroup v-else-if="index === 3" :groupList="groupList"></courseGroup>
 						</view>
@@ -19,8 +19,14 @@
 			</swiper>
 		</view>
 		<view class="BuyNow">
-			<button class="button">立即购买</button>
+			<button class="button">{{courseData.isFree?'立即播放':'立即购买'}}</button>
 		</view>
+		
+		<!-- 遮罩 视频 播放 -->
+	<view class="mask video"  @click="coursePlayStatus=false" v-if="coursePlayStatus">
+			免费试看 X
+		</view> 
+		
 	</view>
 </template>
 
@@ -57,12 +63,18 @@
 				chapterList: [], //章节数据
 				commentList: [], //评论数据
 				groupList:[],//套餐
+				coursePlayStatus:false,
+				courseId:null,
 			};
 		},
 
-		onLoad() {
+		onLoad(option) {
+			console.log(option.id)
 			this.getpageHeight()
+			this.getCourseId(option.id)
 		},
+		
+		
 		// 页面滚动到底部 (滚动条滚动到底部)
 		onReachBottom() { // 默认滚动到页面据底部还有50的时候会触发onReachBottom
 			this.enableScroll = true
@@ -74,30 +86,45 @@
 			this.getGroupList()
 		},
 		methods: {
+			handlePlayVideo(){
+				this.coursePlayStatus = true
+			},
+			
+			
+			
+			
+			
+			// 获取课程id
+					getCourseId(id){
+						this.courseId = id
+					},
 
 			// 请求 详情 信息 
 			async getCourseList() {
-				let res = await courseApi.courseList()
+				let res = await courseApi.courseList(this.courseId)
 				this.courseData = res.data
 				this.detailUrls = res.data.detailUrls
+				
+				uni.setNavigationBarTitle({
+									title : this.courseData.title
+								})
 			},
 
 			// 请求章节 
 			async getChapterList() {
-				let res = await courseApi.chapterList()
+				let res = await courseApi.chapterList(this.courseId)
 				this.chapterList = res.data
 			},
 
 			// 获取 评论 数据 
 			async getCommentList() {
-				let res = await courseApi.commentList()
+				let res = await courseApi.commentList(this.courseId)
 				this.commentList = res.data
 			},
 			
 			// 获取 套餐 数据 
 			async getGroupList(){
-				console.log(123)
-				let res = await courseApi.groupList()
+				let res = await courseApi.groupList(this.courseId)
 				this.groupList = res.data
 			},
 
@@ -140,7 +167,9 @@
 				// 页面高度
 				console.log(res.windowHeight)
 				this.pageHeight = res.windowHeight - this.statusNavHeight
-			}
+			},
+		
+		
 		}
 	}
 </script>
@@ -182,5 +211,10 @@
 			color: #fff;
 			background-color: #345dc2;
 		}
+	}
+	.video{
+		color: #fff;
+		padding-top: 300rpx;
+		text-align: center;
 	}
 </style>

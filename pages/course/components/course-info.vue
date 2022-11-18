@@ -1,8 +1,8 @@
 <template>
 	<!-- 详情 -->
-	<view class="center">
-		<img :src="item" v-for="(item,index) in detailUrls">
-		
+	<view class="center column">
+		<img :src="item" v-for="(item,index) in detailUrls" lazy-load mode="widthFix">
+		<text class="footer-text">已经到达底部，没有更多内容了</text>
 	</view>
 </template>
 
@@ -31,5 +31,9 @@
 
 	}
 
-	
+	.footer-text {
+		font-size: 30rpx;
+		color: #777777;
+		margin: 20rpx 0;
+	}
 </style>

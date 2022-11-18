@@ -25,7 +25,7 @@ const getCourseList = (data) => {
 	})
 }
 
-// 文章模块 数据  api/article/api/article/search     course/api/course/search
+// 文章模块 数据  
 const getArticleList  =(data)=>{
 	return request({
 		url:"/article/api/article/search",

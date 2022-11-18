@@ -1,6 +1,10 @@
 <template>
 	<!-- 评论 -->
 	<view class="comment-box">
+		<view class="img" v-if="!commentList || commentList.length<=0" >
+			<img src="/static/images/loading.gif" alt="">
+			<view>展无数据</view>
+		</view>
 		<view class="item" v-for="(item,index) in commentList" :key="index">
 			<view class="item-header">
 				<view class="user-img">
@@ -134,7 +138,10 @@
 			}
 		}
 	}
-
+.img{
+	text-align: center;
+	margin-top: 200rpx;
+}
 	.grey {
 		color: grey !important;
 	}

@@ -4,12 +4,12 @@
 
 		<view class="dir-item" v-for="(item,index) in chapterList" :key="index">
 			<h3 class="item-title">
-				第{{item.id}}章 {{item.name}}
+				第{{index+1}}章 {{item.name}}
 			</h3>
-			<view class="item-content" v-for="(e,i) in item.sectionList">
+			<view class="item-content" v-for="(e,i) in item.sectionList" @click="handlePlayVideo(e)">
 
 				<i class="iconfont icon-roundrightfill"></i>
-				<span>{{item.id}}-{{e.id}}</span>
+				<span>{{index+1}}-{{i+1}}</span>
 				<span>{{e.name}}</span>
 
 				<text class="trysee" v-if="e.isFree">试看</text>
@@ -22,6 +22,11 @@
 <script>
 	export default {
 		props: {
+			// 是否购买 
+			isBuy : {
+							type : Boolean,
+							default : false
+						},
 			chapterList: { //章节信息
 				type: Array,
 				default: () => [{
@@ -69,6 +74,23 @@
 			return {
 
 			};
+		},
+		
+		methods:{
+			// 点击 一项 判断 是否 免费  或者是否 已经购买 
+			// 如果免费或者是已经购买 打开音频  否则提示 请先购买
+			handlePlayVideo(data){
+				if(data.isFree||this.isBuy){
+					this.$emit('handlePlayVideo',data.isFree)
+				}else{
+					this.$util.msg('请先购买')
+				}
+				
+				
+				
+				
+				
+			}
 		}
 	}
 </script>

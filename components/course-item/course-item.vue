@@ -1,6 +1,6 @@
 <template>
 	<!-- 每一个盒子 -->
-	<view class="item-box" :class="{column : isColumn}">
+	<view class="item-box" :class="{column : isColumn}" @click="navTo(`/pages/course/course-details?id=${item.id}`)" >
 		<view class="left">
 			<img :src="item.mainImage" alt="">
 			<text class="item-time">{{item.totalTime}}</text>

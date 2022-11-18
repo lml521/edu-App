@@ -8,7 +8,6 @@
 				<view class="itemList" v-for="(ele,i) in item.list">
 					<courseItem :item="ele" ></courseItem> 
 				</view>
-				
 				<view class="pic">
 					<text v-if="item.groupPrice">￥{{item.groupPrice}}</text>
 					<text :class="{s:item.groupPrice}" >￥{{item.totalPrice}}</text>
@@ -16,11 +15,6 @@
 					
 				</view>
 			</view>
-			
-		
-
-
-
 	</view>
 </template>
 

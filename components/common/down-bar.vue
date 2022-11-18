@@ -7,8 +7,6 @@
 				<text class="iconfont icon-down1" v-show="!item.active"></text>
 				<text class="iconfont icon-up" v-show="item.active"></text>
 			</view>
-
-
 			<view class="item-list" v-show="item.active">
 				<classify v-if="item.isCategory" class="category" :value="item" @searchByLabel="searchByLabel">
 				</classify>

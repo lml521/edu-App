@@ -4,7 +4,8 @@
 	<view class="tab-bar" >
 		<view class="bar-view center"  @touchmove.stop.prevent="()=>{}">
 			
-			<view class="bar-item" v-for="(item,index) in tabs" :key="index"  :class="{current:index===value}" 
+			<view class="bar-item" v-for="(item,index) in tabs" :key="index"  
+			:class="{current:index===value}"
 			@click="handelChangeTab(index)">
 				{{item.name}}
 				
