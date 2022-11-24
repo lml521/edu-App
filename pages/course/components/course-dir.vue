@@ -13,7 +13,7 @@
 				<span>{{index+1}}-{{i+1}}</span>
 				<span>{{e.name}}</span>
 
-				<text class="trysee" v-if="e.isFree">试看</text>
+				<text class="trysee" v-if="!isBuy && e.isFree">试看</text>
 			</view>
 
 		</view>
@@ -31,8 +31,8 @@
 			activeObject: {
 				type: Object,
 				default: () => ({
-					index:0,
-					i:0,
+					index:0,//章  的 数据
+					i:0,//节  的数据
 				})
 			},
 			chapterList: {

@@ -113,27 +113,37 @@
 			}
 		},
 		{
-				"path": "pages/course/course-details",
-				"style": {
-					"navigationBarTextStyle": "white",
-					"navigationBarBackgroundColor": "#345DC2",
-					"app-plus": {
-						"bounce": "none",// 禁止app回弹效果
-						"scrollIndicator": "none",// 隐藏页面滚动条（APP）
+			"path": "pages/course/course-details",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#345DC2",
+				"app-plus": {
+					"bounce": "none", // 禁止app回弹效果
+					"scrollIndicator": "none", // 隐藏页面滚动条（APP）
 
-						"titleNView": {
-							"type":"transparent"// 滚动透明渐变, 后面不要逗号
+					"titleNView": {
+						"type": "transparent" // 滚动透明渐变, 后面不要逗号
 							// #ifdef APP-PLUS
 							,
-							"buttons": [{
-								"type":"share"
-							}]
-							// #endif
-						}
+						"buttons": [{
+							"type": "share"
+						}]
+						// #endif
 					}
 				}
 			}
-		
+		}
+
+		, {
+			// 视频播放页面 
+			"path": "pages/course/course-play",
+			"style": {
+				"app-plus": {
+					"titleNView": false// 导航栏  返回按钮 隐藏
+				}
+			}
+
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

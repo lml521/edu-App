@@ -12,9 +12,8 @@
 							<!-- 详情 -->
 							<courseInfo v-if="index === 0" :detailUrls="detailUrls"></courseInfo>
 							<!-- 章节 -->
-							<courseDir v-else-if="index === 1" :chapterList="chapterList"
-							:activeObject="activeObject"
-								@handlePlayVideo="handlePlayVideo"></courseDir>
+							<courseDir v-else-if="index === 1" :chapterList="chapterList" :activeObject="activeObject"
+								:isBuy="isBuy" @handlePlayVideo="handlePlayVideo"></courseDir>
 							<!-- 评论 -->
 							<courseComment v-else-if="index === 2" :commentList="commentList"></courseComment>
 							<!-- 套餐 -->
@@ -25,19 +24,17 @@
 			</swiper>
 		</view>
 		<view class="BuyNow">
-			<button class="button" @click="purchasePlay">{{courseData.isFree?'立即播放':'立即购买'}}</button>
+			<button class="button" @click="purchasePlay">{{isBuy ||courseData.isFree?'立即观看':'立即购买'}}</button>
 		</view>
 
 		<!-- 遮罩 视频 播放 -->
-		<view class="mask videoBox" @click="videoClose" v-if="videoUrl">
+		<view class="mask videoBox" @click="videoClose" v-if="videoUrl" @handlePlayVideo="handlePlayVideo">
 			<view class="title">
-				免费试看 
+				免费试看
 				<i class="iconfont icon-close"></i>
 			</view>
 			<video :src="videoUrl" id="myVideo" class="video"></video>
-			
 		</view>
-
 	</view>
 </template>
 
@@ -63,10 +60,11 @@
 		},
 		data() {
 			return {
+				isBuy: true, //是否购买课程
 				index: 0,
 				list,
-				pageHeight: 300,//页面高度
-				enableScroll: false,//详情 是否开启滚动 
+				pageHeight: 300, //页面高度
+				enableScroll: false, //详情 是否开启滚动 
 				detailTop: 0,
 				statusNavHeight: 0, // 状态栏  +  导航栏的高度
 				courseData: {}, //详情页头部信息
@@ -75,28 +73,28 @@
 				commentList: [], //评论数据
 				groupList: [], //套餐
 				coursePlayStatus: false,
-				courseId: null,
-				videoUrl:null,//视频播放的地址
+				courseId: null, //视频id
+				videoUrl: null, //视频播放的地址
 				// 视频选中的 id 
-				activeObject:{
-					index:0,
-					i:0
+				activeObject: {
+					index: 0,
+					i: 0
 				},
-				videoContext:null,//音频实例对象
-				
+				videoContext: null, //音频实例对象
+
 			};
 		},
 
 		onLoad(option) {
 			console.log(option.id)
-			this.getpageHeight()//获取页面高度
+			this.getpageHeight() //获取页面高度
 			this.getCourseId(option.id)
 		},
 		onReady() {
 			// 获取 视频 实例对象 
-		 this.videoContext = uni.createVideoContext('myVideo')
+			this.videoContext = uni.createVideoContext('myVideo')
 		},
-		
+
 
 		// 页面滚动到底部 (滚动条滚动到底部)
 		onReachBottom() { // 默认滚动到页面据底部还有50的时候会触发onReachBottom
@@ -110,23 +108,35 @@
 		},
 		methods: {
 			// 点击 视频  play
-			handlePlayVideo(data,index,i) {
-				console.log(data,'data')
-				this.activeObject.index=index;
-				this.activeObject.i=i;	
-				// 视频实例对象 方法 play 自动播放 
-				this.videoContext.play()
-				this.$nextTick(()=>{
-					this.videoUrl=data.videoUrl
+			handlePlayVideo(data, index, i) {
+				this.activeObject.index = index;
+				this.activeObject.i = i;
+				// 判断是否购买章节  如果购买了章节 跳转 视频播放页面
+				if (this.isBuy) {
+					this.navTo(
+						`/pages/course/course-play?id=${this.courseId}&index=${this.activeObject.index}&i=${this.activeObject.i}`
+						)
+					return
+				}
+
+
+				this.$nextTick(() => {
+					this.videoUrl = data.videoUrl
+					// 视频实例对象 方法 play 自动播放 
+					this.videoContext.play()
 				})
 			},
-			videoClose(){
-				this.videoContext.stop()//停止播放
-				this.videoUrl=null
+			videoClose() {
+				this.videoContext.stop() //停止播放
+				this.videoUrl = null
 			},
 			// 按钮  立即购买 立即播放
-			purchasePlay(){
-				
+			purchasePlay() {
+				console.log(this.isBuy, this.courseData.isFree, 555)
+				// 当isBuy为true 则是购买过课程  ,isFree 为 1是免费   跳转 视频播放页面
+				if (this.isBuy || this.courseData.isFree) {
+					this.navTo('/pages/course/course-play')
+				}
 			},
 
 
@@ -255,13 +265,15 @@
 		color: #fff;
 		padding-top: 400rpx;
 		text-align: center;
-		.title{
+
+		.title {
 			margin: 30rpx 0;
 		}
-		.video{
+
+		.video {
 			width: 750rpx;
 			height: 380rpx;
 		}
-		
+
 	}
 </style>
