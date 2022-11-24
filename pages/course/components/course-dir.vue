@@ -13,7 +13,7 @@
 				<span>{{index+1}}-{{i+1}}</span>
 				<span>{{e.name}}</span>
 
-				<text class="trysee" v-if="!isBuy && e.isFree">试看</text>
+				<text class="trysee" v-if="!isBuy && e.isFree===0">试看</text>
 			</view>
 
 		</view>
