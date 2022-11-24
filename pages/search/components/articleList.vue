@@ -54,27 +54,21 @@
 				default: '',
 			},
 		},
-			// mounted() {
-			// 		this.params && Object.keys(this.searchData).forEach(key=>{
-			// 			this.searchData[key] = this.params[key] || null
-			// 		})
-			// 		console.log("search=>",this.searchData)
-			// 	},
 		data() {
 			return {
 			
 				downOption: {
-					auto: false,
+					auto: true,
 				},
 				upOption: {
-					auto: false, // 不自动加载
+					auto: true, // 不自动加载
 					noMoreSize: 4,
 					empty: {
 						tip: "暂无相关数据",
 						icon: ""
 					}
 				},
-				articleList: [],
+				articleList: [],//全部数据
 				// 用来保存搜索的参数
 				searchData: {
 					content: '', // 要查询的内容
@@ -90,19 +84,11 @@
 		methods: {
 			// 搜索
 			search(data) {
-				// if(data){
-				// 	Object.assign(this.searchData, data)
-				// }
-				// this.mescroll.resetUpScroll(true) // 每次搜索 先从第一页开始
 			},
 			// 上拉加载 回调
 			async upCallback(page) {
-				// this.searchData.content = this.content && this.content.trim() || ""
-				// this.searchData.current = page.num
-				// this.searchData.size = page.size
 					let res = await indexApi.getArticleList(this.searchData)
 					const list = res.data.records
-					console.log(res.data.records)
 					if(page.num==1){
 						this.articleList=[],
 						this.mescroll.scrollTo(0,0)
@@ -110,7 +96,7 @@
 					
 					this.articleList=this.articleList.concat(list)
 				    this.mescroll.endBySize(this.articleList.length,res.data.total)
-				// this.mescroll.endSuccess(0) // 关闭 下拉搜索
+				
 			}
 		}
 	}
@@ -124,8 +110,6 @@
 
 	.empty-icon {
 		background-color: pink !important;
-		// margin: auto;
-		// display: inline-block !important;
 		margin: auto !important;
 		background-color: pink;
 

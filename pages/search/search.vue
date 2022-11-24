@@ -3,8 +3,8 @@
 		<!-- 搜索 -->
 		<!-- 小程序中搜索 -->
 		<!-- #ifdef MP-WEIXIN -->
-		<uni-search-bar v-model="content" :focus="focus" placeholder="搜索你想要的内容" @confirm="doSearch"
-			@cancel="navBack()" radius="100" clearButton="auto" cancelButton="always">
+		<uni-search-bar v-model="content" :focus="focus" placeholder="搜索你想要的内容" @confirm="doSearch" @cancel="navBack()"
+			radius="100" clearButton="auto" cancelButton="always">
 			<template v-slot:searchIcon>
 				<text class="iconfont icon-search"></text>
 			</template>
@@ -35,22 +35,20 @@
 
 	import searchInput from '@/components/search-input/search-input.vue'; //小程序中搜索
 
-	import courseList from "@/pages/search/components/courseList.vue"
-	import articleList from "@/pages/search/components/articleList.vue"
-	import questionList from "@/pages/search/components/questionList.vue"
+	import courseList from "@/pages/search/components/courseList.vue"//课程
+	import articleList from "@/pages/search/components/articleList.vue"//文章
+	import questionList from "@/pages/search/components/questionList.vue"//问答
 
 	import MescrollMoreMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-more.js";
 	export default {
 		mixins: [MescrollMoreMixin],
 		components: {
-			searchInput,
-			tabBar,
-
-			keyword,
-
-			courseList,
-			articleList,
-			questionList
+			searchInput,//小程序中搜索
+			tabBar,//tabBar 栏 切换 
+			keyword,//热门历史关键词提示组件
+			courseList,//课程
+			articleList,//文章
+			questionList//问答
 		},
 		data() {
 			return {
@@ -62,7 +60,6 @@
 
 				// #ifdef APP-PLUS
 				currentWebview: null
-
 				// #endif
 
 			};
@@ -95,7 +92,7 @@
 		},
 
 		methods: {
-			
+
 			// 监听 
 			listenerParams(options) {
 
@@ -136,24 +133,17 @@
 
 			// 搜索  查询 
 			doSearch(obj) {
-				// obj有数据，则获取
+				// obj有数据，则获取数据
 				this.content = obj && obj.value ? obj.value : this.content
-				// 标识搜索过，隐藏keyword.vue组件内容
 				this.searched = true
-				
-				// // #ifdef MP-WEIXIN
-				//  // 传递给小程序 搜索框, 注意上面取 `ref="searchBar"`
-				//  this.$refs.searchBar.searchVal = this.content
-				//  // #endif
 
-				// 关键字保留本地 
-				
 				// 节流 搜索 
 				this.$nextTick(() => {
 					this.$util.throttle(() => {
 						this.$refs[`mescrollItem${this.tabBarId}`].search()
 					})
 				})
+				// 保留关键字
 				this.storageHistory()
 			},
 
@@ -163,9 +153,8 @@
 			storageHistory() {
 				const key = 'historyList'
 				uni.getStorage({
-					key, // 等价于 key: key,
-					success: (res) => { //注意箭头函数
-						// console.log('获取成功', res.data);
+					key, 
+					success: (res) => { 
 						// 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在不添加
 						this.content && res.data.indexOf(this.content) < 0 && res.data.unshift(this.content)
 						// 保存到历史记录
@@ -180,11 +169,7 @@
 
 						uni.setStorageSync(key, res.data)
 					},
-					fail: (error) => { //注意箭头函数
-						// 没有历史数据。
-						// 当前有输入内容，直接保存，注意是数组
-						// this.content && uni.setStorageSync(key, [this.content])
-
+					fail: (error) => {
 						// #ifdef MP-WEIXIN
 						this.content && wx.setStorageSync(key, [this.content])
 						// #endif 
@@ -202,10 +187,9 @@
 <style lang="scss">
 	.search-container {
 		width: 750rpx;
-		/* 全屏，不然后面`下拉筛选粘组件`粘顶会失效 */
 		margin: 0;
 		padding: 0;
 	}
 
-	uni-search-bar {}
+	
 </style>

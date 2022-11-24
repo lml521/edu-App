@@ -57,17 +57,17 @@
 					this.params && Object.keys(this.searchData).forEach(key=>{
 						this.searchData[key] = this.params[key] || null
 					})
-					console.log("search=>",this.searchData)
+					console.log(this.searchData,"search")
 				},
 		data() {
 			return {
 				// 下拉菜单 数据 
 				downBarlist: downBarlist(),
 				downOption: {
-					auto: false,
+					auto: true,
 				},
 				upOption: {
-					auto: false, // 不自动加载
+					auto: true, // 不自动加载
 					noMoreSize: 4,
 					empty: {
 						tip: "暂无相关数据",

@@ -1,7 +1,7 @@
 <template>
 		<!-- 问答 -->
 		<view class="">
-			
+			<!-- 问答 -->
 		</view>
 		
 </template>

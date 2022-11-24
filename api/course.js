@@ -1,4 +1,4 @@
-// 详情页面 
+// 
 import request from '@/utils/request.js'
 
 const courseList =(id)=>{

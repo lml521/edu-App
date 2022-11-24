@@ -1,4 +1,5 @@
 <template>
+	<!-- 详情页面 -->
 	<view v-cloak>
 		<courseHeader :item="courseData"></courseHeader>
 		<view class="course-details" :style="{height : pageHeight + 'px'}">
@@ -8,10 +9,15 @@
 					<scroll-view upper-threshold="0" @scrolltoupper="scrolltoupper" class="scroll-view"
 						:scroll-y="enableScroll">
 						<view class="details-info">
-							<!-- <view v-for="(item,index) in 90">123</view> -->
+							<!-- 详情 -->
 							<courseInfo v-if="index === 0" :detailUrls="detailUrls"></courseInfo>
-							<courseDir v-else-if="index === 1" :chapterList="chapterList" @handlePlayVideo="handlePlayVideo"></courseDir>
+							<!-- 章节 -->
+							<courseDir v-else-if="index === 1" :chapterList="chapterList"
+							:activeObject="activeObject"
+								@handlePlayVideo="handlePlayVideo"></courseDir>
+							<!-- 评论 -->
 							<courseComment v-else-if="index === 2" :commentList="commentList"></courseComment>
+							<!-- 套餐 -->
 							<courseGroup v-else-if="index === 3" :groupList="groupList"></courseGroup>
 						</view>
 					</scroll-view>
@@ -19,14 +25,19 @@
 			</swiper>
 		</view>
 		<view class="BuyNow">
-			<button class="button">{{courseData.isFree?'立即播放':'立即购买'}}</button>
+			<button class="button" @click="purchasePlay">{{courseData.isFree?'立即播放':'立即购买'}}</button>
 		</view>
-		
+
 		<!-- 遮罩 视频 播放 -->
-	<view class="mask video"  @click="coursePlayStatus=false" v-if="coursePlayStatus">
-			免费试看 X
-		</view> 
-		
+		<view class="mask videoBox" @click="videoClose" v-if="videoUrl">
+			<view class="title">
+				免费试看 
+				<i class="iconfont icon-close"></i>
+			</view>
+			<video :src="videoUrl" id="myVideo" class="video"></video>
+			
+		</view>
+
 	</view>
 </template>
 
@@ -54,27 +65,39 @@
 			return {
 				index: 0,
 				list,
-				pageHeight: 300,
-				enableScroll: false,
+				pageHeight: 300,//页面高度
+				enableScroll: false,//详情 是否开启滚动 
 				detailTop: 0,
 				statusNavHeight: 0, // 状态栏  +  导航栏的高度
 				courseData: {}, //详情页头部信息
 				detailUrls: [], //详情页数据 
 				chapterList: [], //章节数据
 				commentList: [], //评论数据
-				groupList:[],//套餐
-				coursePlayStatus:false,
-				courseId:null,
+				groupList: [], //套餐
+				coursePlayStatus: false,
+				courseId: null,
+				videoUrl:null,//视频播放的地址
+				// 视频选中的 id 
+				activeObject:{
+					index:0,
+					i:0
+				},
+				videoContext:null,//音频实例对象
+				
 			};
 		},
 
 		onLoad(option) {
 			console.log(option.id)
-			this.getpageHeight()
+			this.getpageHeight()//获取页面高度
 			this.getCourseId(option.id)
 		},
+		onReady() {
+			// 获取 视频 实例对象 
+		 this.videoContext = uni.createVideoContext('myVideo')
+		},
 		
-		
+
 		// 页面滚动到底部 (滚动条滚动到底部)
 		onReachBottom() { // 默认滚动到页面据底部还有50的时候会触发onReachBottom
 			this.enableScroll = true
@@ -86,28 +109,43 @@
 			this.getGroupList()
 		},
 		methods: {
-			handlePlayVideo(){
-				this.coursePlayStatus = true
+			// 点击 视频  play
+			handlePlayVideo(data,index,i) {
+				console.log(data,'data')
+				this.activeObject.index=index;
+				this.activeObject.i=i;	
+				// 视频实例对象 方法 play 自动播放 
+				this.videoContext.play()
+				this.$nextTick(()=>{
+					this.videoUrl=data.videoUrl
+				})
 			},
-			
-			
-			
-			
-			
+			videoClose(){
+				this.videoContext.stop()//停止播放
+				this.videoUrl=null
+			},
+			// 按钮  立即购买 立即播放
+			purchasePlay(){
+				
+			},
+
+
+
+
 			// 获取课程id
-					getCourseId(id){
-						this.courseId = id
-					},
+			getCourseId(id) {
+				this.courseId = id
+			},
 
 			// 请求 详情 信息 
 			async getCourseList() {
 				let res = await courseApi.courseList(this.courseId)
 				this.courseData = res.data
 				this.detailUrls = res.data.detailUrls
-				
+
 				uni.setNavigationBarTitle({
-									title : this.courseData.title
-								})
+					title: this.courseData.title
+				})
 			},
 
 			// 请求章节 
@@ -121,9 +159,9 @@
 				let res = await courseApi.commentList(this.courseId)
 				this.commentList = res.data
 			},
-			
+
 			// 获取 套餐 数据 
-			async getGroupList(){
+			async getGroupList() {
 				let res = await courseApi.groupList(this.courseId)
 				this.groupList = res.data
 			},
@@ -168,8 +206,8 @@
 				console.log(res.windowHeight)
 				this.pageHeight = res.windowHeight - this.statusNavHeight
 			},
-		
-		
+
+
 		}
 	}
 </script>
@@ -212,9 +250,18 @@
 			background-color: #345dc2;
 		}
 	}
-	.video{
+
+	.videoBox {
 		color: #fff;
-		padding-top: 300rpx;
+		padding-top: 400rpx;
 		text-align: center;
+		.title{
+			margin: 30rpx 0;
+		}
+		.video{
+			width: 750rpx;
+			height: 380rpx;
+		}
+		
 	}
 </style>

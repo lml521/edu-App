@@ -31,6 +31,7 @@
 
 				<!--付费精品 -->
 				<listCourse name="付费精选" word="NICE" :courseData="payCourseList"></listCourse>
+		
 			</view>
 		</mescroll-body>
 
@@ -74,7 +75,7 @@
 					offset: 50, //距离下面还有多少加载
 				},
 				upOption: {
-					textLoading: '亲亲，在查询下页数据中',
+					textLoading: '正在查询下页数据中',
 					page: {
 						num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
 						size: 10, // 每页数据的数量
@@ -94,13 +95,11 @@
 		
 		// 搜索框
 		onNavigationBarSearchInputClicked :function(){
-			console.log(1234)
 			this.navTo("/pages/search/search")
 		},
 
 
 		onLoad() {
-
 			// #ifdef APP-PLUS
 			// 搜索框提示信息，只在APP中有
 			this.placeholderData()
@@ -108,7 +107,6 @@
 			this.loadData()
 		},
 		methods: {
-
 			loadData() {
 				this.getBanner()
 				this.getNavList()
@@ -121,8 +119,6 @@
 			placeholderData() {
 				//获取当前页面实例, 仅 App 支持写在APP-PLUS条件编译下
 				let webview = this.$scope.$getAppWebview();
-				// webview.setStyle() 接收WebviewStyles对象改变样式
-				// 修改导航输入框提示信息
 				let arr = ['APP · 微信小程序', 'Java · SprinBoot', 'SpringCloud·SpringSecurity', 'Vue · React'];
 
 				// 执行马上调用，如果在定时器自调用会报错，所以第一次放外面
@@ -156,7 +152,7 @@
 						url: `/pages/public/web-view?url=${res[1].result}`
 					})
 				} catch (e) {
-					console.log(e);
+					console.log(e,'扫码错误');
 				}
 			},
 			// 获取 轮播图 
@@ -175,7 +171,7 @@
 					let res = await api.getNavList()
 					this.categoryList = res.data
 				} catch (e) {
-					confirm.log(e, '分类信息')
+						console.log(e, '分类信息')
 				}
 			},
 
@@ -189,7 +185,7 @@
 					})
 					this.hotCourseList = res.data.records
 				} catch (e) {
-					confirm.log(e, '热门推荐')
+					console.log(e, '热门推荐')
 				}
 			},
 

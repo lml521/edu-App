@@ -2,11 +2,12 @@
 	<view class="dir-box">
 		<!-- 章节 -->
 
-		<view class="dir-item" v-for="(item,index) in chapterList" :key="index">
+		<view class="dir-item"   v-for="(item,index) in chapterList" :key="index">
 			<h3 class="item-title">
 				第{{index+1}}章 {{item.name}}
 			</h3>
-			<view class="item-content" v-for="(e,i) in item.sectionList" @click="handlePlayVideo(e)">
+			<view class="item-content" :class="{active:activeObject.i==i&&activeObject.index==index}"
+			 v-for="(e,i) in item.sectionList" @click="handlePlayVideo(e,index,i)">
 
 				<i class="iconfont icon-roundrightfill"></i>
 				<span>{{index+1}}-{{i+1}}</span>
@@ -23,11 +24,19 @@
 	export default {
 		props: {
 			// 是否购买 
-			isBuy : {
-							type : Boolean,
-							default : false
-						},
-			chapterList: { //章节信息
+			isBuy: {
+				type: Boolean,
+				default: false
+			},
+			activeObject: {
+				type: Object,
+				default: () => ({
+					index:0,
+					i:0,
+				})
+			},
+			chapterList: {
+				//章节信息
 				type: Array,
 				default: () => [{
 						id: 1,
@@ -75,21 +84,16 @@
 
 			};
 		},
-		
-		methods:{
+
+		methods: {
 			// 点击 一项 判断 是否 免费  或者是否 已经购买 
 			// 如果免费或者是已经购买 打开音频  否则提示 请先购买
-			handlePlayVideo(data){
-				if(data.isFree||this.isBuy){
-					this.$emit('handlePlayVideo',data.isFree)
-				}else{
+			handlePlayVideo(data,index,i) {
+				if (data.isFree || this.isBuy) {
+					this.$emit('handlePlayVideo', data,index,i)
+				} else {
 					this.$util.msg('请先购买')
 				}
-				
-				
-				
-				
-				
 			}
 		}
 	}
@@ -133,10 +137,14 @@
 				.trysee {
 					position: absolute;
 					right: 0;
-					color: #238cff;
+					color: $text-color-blue;
 				}
 			}
 
 		}
+	}
+
+	.active {
+		color: $text-color-blue !important;
 	}
 </style>

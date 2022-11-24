@@ -2,7 +2,8 @@
 	<!-- 轮播图 -->
 	<view class="banner-box">
 		<view class="bannerBg" 
-		:style="{'background-image':`linear-gradient( ${bannerBackground || '#345dc2'} 50%, #F8F9FB)`}"></view>
+		:style="{'background-image':`linear-gradient( ${bannerBackground || '#345dc2'} 50%, #F8F9FB)`}">
+		</view>
 		<swiper class="swiper" 
 		:indicator-dots="true" 
 		:autoplay="true" 
@@ -54,7 +55,7 @@
 <style lang="scss">
 	.banner-box {
 		position: relative;
-		padding-top: 120rpx;
+		padding-top: 120rpx !important;
 
 		.bannerBg {
 			position: absolute;

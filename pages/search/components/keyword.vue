@@ -19,24 +19,22 @@
 </template>
 
 <script>
-	let historyList="historyList"
+	let historyList = "historyList"
 	export default {
 		data() {
 			return {
 				//热门搜索
 				hotList: ['Java', 'SpringBoot', 'SpringCloud', 'Python', 'Vue', 'React'],
+				// 微信小程序本地存储
 				// #ifdef MP-WEIXIN
-				historyList:wx.getStorageSync(historyList),
+				historyList: wx.getStorageSync(historyList),
 				// #endif 
-				
+				// h5 与 app 本地存储 
 				// #ifndef MP-WEIXIN
-				historyList: uni.getStorageSync(historyList), //历史搜索
+				historyList:uni.getStorageSync(historyList) , //历史搜索
 				// #endif 
-				
 				// historyList: uni.getStorageSync(historyList)
-
-
-				content:'',
+				content: '',
 			}
 		},
 
@@ -45,73 +43,58 @@
 			clearHistory() {
 				this.historyList = []
 				// uni.removeStorageSync(historyList)
-
+				// 微信小程序本地存储
 				// #ifdef MP-WEIXIN
 				wx.removeStorageSync(historyList)
+				// JSON.parse()
 				// #endif 
-				
-				
+
+				// h5 与 app 本地存储 
 				// #ifndef MP-WEIXIN
-			     uni.removeStorageSync(historyList) //历史搜索
+				uni.removeStorageSync(historyList) //历史搜索
 				// #endif 
 
 			},
+			// 点击 胶囊按钮
 			clickTagHandler(item) {
-				this.handelSetSearch(item) 
-				this.$emit("doSearch", {value : item})
+				this.handelSetSearch(item)
+				this.$emit("doSearch", {
+					value: item
+				})
 			},
 
 			storageHistory() {
-			 uni.getStorage({
-					historyList, // 等价于 key: key,
-					success: (res) => { //注意箭头函数
-						// console.log('获取成功', res.data);
-						// 查询到原历史记录，当前输入的是否存在，不存在添加到第1个元素，存在不添加
-						this.content && res.data.indexOf(this.content) < 0 &&
-							res.data.unshift(this.content)
+				uni.getStorage({
+					historyList,
+					success: (res) => { 
+						// 当本地有数据 往本地头部添加数据
+						this.content && res.data.indexOf(this.content) < 0 && res.data.unshift(this.content)
 						// 保存到历史记录
-						// uni.setStorageSync(historyList, res.data)
-						
+
 						// #ifdef MP-WEIXIN
 						wx.setStorageSync(historyList, res.data)
 						// #endif 
-						
-						
+
 						// #ifndef MP-WEIXIN
-						 uni.setStorageSync(historyList, res.data)
+						uni.setStorageSync(historyList, res.data)
 						// #endif 
-						
-						
-						
+
 					},
-					fail: (error) => { //注意箭头函数
-						// 没有历史数据。
-						// 当前有输入内容，直接保存，注意是数组
-						
-						
-						
-						// this.content && uni.setStorageSync(historyList, [this.content])
-						
+					fail: (error) => { 
+						// 当本地没有 数据  添加 数据 
 						// #ifdef MP-WEIXIN
-						
 						this.content && wx.setStorageSync(historyList, [this.content])
 						// #endif 
-						
-						
+
 						// #ifndef MP-WEIXIN
 						this.content && uni.setStorageSync(historyList, [this.content])
-						// #endif 
-						
-						
-						
-						
+						// #endif 						
 					}
 				})
 			},
 
+		}
 	}
-}
-
 </script>
 
 <style lang="scss">
