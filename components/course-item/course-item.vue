@@ -15,8 +15,8 @@
 				</view>
 				<view class="count">
 					<text v-if="item.isFree" class="money">免费</text>
-					<text v-else class="money">{{item.priceDiscount||item.priceOriginal}}</text>
-					<text class="iconfont">{{item.studyTotal}} 人在学</text>
+					<text v-else class="money iconfont icon-moneybag">{{item.priceDiscount||item.priceOriginal}}</text>
+					<text class="iconfont icon-video">{{item.studyTotal}} 人在学</text>
 				</view>
 			</view>
 
@@ -41,7 +41,7 @@
 					return {
 					commTotal: 201,
 					id: 10,
-					isFree: 1,
+					isFree: 0,
 					mainImage: "/static/images/banner2.jpg",
 					nickName: "梦老师",
 					priceDiscount: 156.36,
@@ -69,7 +69,7 @@
 		display: flex;
 		width: 100%;
 		padding: 20rpx 0;
-		border-bottom: 2rpx solid #fbfbfb;
+		border-bottom: 2rpx solid  #ccc;
 
 		.left {
 			width: 290rpx;
@@ -131,9 +131,10 @@
 					align-items: center;
 
 					.money {
-						color: #fb6932;
-						width: 65px;
-						font-size: 14px;
+						color: #fb6932 !important;
+						margin-top: 5rpx;
+						width: 65px !important;
+						font-size: 14px !important;
 					}
 
 					.iconfont {

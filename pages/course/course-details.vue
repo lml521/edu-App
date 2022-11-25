@@ -60,7 +60,7 @@
 		},
 		data() {
 			return {
-				isBuy: true, //是否购买课程
+				isBuy: false, //是否购买课程
 				index: 0,
 				list,
 				pageHeight: 300, //页面高度
@@ -135,7 +135,11 @@
 				console.log(this.isBuy, this.courseData.isFree, 555)
 				// 当isBuy为true 则是购买过课程  ,isFree 为 1是免费   跳转 视频播放页面
 				if (this.isBuy || this.courseData.isFree) {
+					// 跳转视频播放页面
 					this.navTo('/pages/course/course-play')
+				}else{
+					// 跳转确认购买页this.navTo(`/pages/order/confirm-buy?course=`+encodeURIComponent(JSON.stringify(this.course)) )
+					this.navTo(`/pages/order/confirm-buy?course=`+encodeURIComponent(JSON.stringify(this.courseData)))
 				}
 			},
 

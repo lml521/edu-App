@@ -4,24 +4,25 @@
 		<view class="group-item" v-for="(item,index) in groupList" :key="index">
 			<view class="title">
 				{{item.title}}
-				</view>
-				<view class="itemList" v-for="(ele,i) in item.list">
-					<courseItem :item="ele" ></courseItem> 
-				</view>
-				<view class="pic">
-					<text v-if="item.groupPrice">￥{{item.groupPrice}}</text>
-					<text :class="{s:item.groupPrice}" >￥{{item.totalPrice}}</text>
-					<text class="purchase">购买套餐</text>
-					
-				</view>
 			</view>
+			<view class="itemList" v-for="(ele,i) in item.list">
+				<courseItem :item="ele"></courseItem>
+			</view>
+			<view class="pic">
+
+				<text v-if="item.groupPrice">￥{{item.groupPrice}}</text>
+				<text :class="{s:item.groupPrice}">￥{{item.totalPrice}}</text>
+				<text class="purchase" @click="handleToConfirmBuy">购买套餐</text>
+
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	import courseItem from '@/components/course-item/course-item.vue'
 	export default {
-		components:{
+		components: {
 			courseItem
 		},
 		props: {
@@ -87,41 +88,52 @@
 			return {
 
 			};
+		},
+		methods: {
+			handleToConfirmBuy() {
+				// encodeURIComponent   将特殊字符编码
+				// decodeURIComponent   将特殊字符进行解码
+				this.navTo("/pages/order/confirm-buy?groupList=" + encodeURIComponent(JSON.stringify(this.groupList)))
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.group-item{
-	margin: 18px 15px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 2px 0 10px 0  #ccc;
-    padding: 0 10px;
-	.title{
-		padding: 20rpx 0 10rpx 0;
-	}
-	.pic{
-		border-top: 1px solid #ccc;
-		padding: 10rpx 0;
-		font-size: 40rpx;
-		color: #fa1e18;
-		font-weight: 900;
-		text{
-			margin-right: 10rpx;
+	.group-item {
+		margin: 18px 15px;
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 2px 0 10px 0 #ccc;
+		padding: 0 10px;
+
+		.title {
+			padding: 20rpx 0 10rpx 0;
 		}
-		.s{
-			color: #a0a0a0;
-			font-size: 28rpx;
-			text-decoration:line-through;
-		}
-		.purchase{
-			
-			position: absolute;
-			font-size: 36rpx;
-			right: 80rpx;
+
+		.pic {
+			border-top: 1px solid #ccc;
+			padding: 10rpx 0;
+			font-size: 40rpx;
+			color: #fa1e18;
+			font-weight: 900;
+
+			text {
+				margin-right: 10rpx;
+			}
+
+			.s {
+				color: #a0a0a0;
+				font-size: 28rpx;
+				text-decoration: line-through;
+			}
+
+			.purchase {
+
+				position: absolute;
+				font-size: 36rpx;
+				right: 80rpx;
+			}
 		}
 	}
-	}
-   
 </style>
