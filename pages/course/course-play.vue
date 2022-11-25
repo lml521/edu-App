@@ -11,13 +11,9 @@
 				<text class="iconfont icon-right "></text>
 			</view>
 		</view>
-
-
 		<!-- 课程章节 -->
 		<courseDir @handlePlayVideo="changeVideo" :chapterList="courseList" :activeObject="activeObject" :isBuy="isBuy">
 		</courseDir>
-
-
 		<!-- 底部按钮 分析  评价 -->
 		<view class="footerBtn row">
 			<!-- #ifdef APP-PLUS -->
@@ -26,21 +22,27 @@
 				<text>分享</text>
 			</view>
 			<!-- #endif -->
-			<view class="one center column">
+			<view class="one center column" @click="handleOpenComment">
 				<text class="iconfont  icon-edit"></text>
 				<text>评价</text>
 			</view>
 		</view>
+
+		<comment ref="uniRate" @handelSubmit="handelSubmit"></comment>
+
 	</view>
 </template>
 
 <script>
 	import courseDir from '@/pages/course/components/course-dir.vue' // 每一个视频组件
-	import courseApi from '@/api/course.js'
+	import courseApi from '@/api/course.js' // api
+	import comment from '@/pages/course/components/comment.vue' //五星评价 组件
 	export default {
 		components: {
-			courseDir
+			courseDir,
+			comment
 		},
+
 		data() {
 			return {
 				isBuy: true, //课程是否购买
@@ -77,12 +79,43 @@
 		},
 
 		methods: {
+			// 提交评价
+			async handelSubmit(data) {
+				// 开启loading
+				uni.showLoading({
+					title: '提交中...',
+					mask: true
+				})
+				try {
+					data.courseId = this.id
+					const response = await courseApi.submitCourseComment(data)
+					this.$refs['uniRate'].show() //关闭评价弹窗
+					
+					
+					if (response.code == 20000) {
+						this.$util.msg('评论成功')
+					} else {
+						this.$util.msg('评论失败')
+					}
+				} catch (e) {
+					console.log(e)
+				}
+
+			},
+
+
+
+
+			// 打开评价 
+			handleOpenComment() {
+				this.$refs['uniRate'].show() //打开评价弹窗
+			},
 			// 切换下一个视频 
 			changeVideo(data, index, i) {
 				this.activeObject.index = index
 				this.activeObject.i = i
 				this.videoContext.pause()
-					this.videoUrl = data.videoUrl
+				this.videoUrl = data.videoUrl
 				setTimeout(() => {
 					this.videoContext.play()
 				}, 300)

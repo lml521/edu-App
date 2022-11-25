@@ -2,7 +2,6 @@ let _throttleRunning = false // 判断是否开启节流 开关
 
 /** 
  * callback 是一个 函数方法  就是要执行 的函数
- * 
  * delay  延时的时间 默认 为500
  */
 
