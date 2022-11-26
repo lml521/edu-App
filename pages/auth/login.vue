@@ -78,12 +78,16 @@
 			// 登录 
 			async handelLogin() {
 				// 检验手机号码是否有效 
+				console.log(!this.$util.checkStr(this.mobile, 'mobile'))
 				if (!this.$util.checkStr(this.mobile, 'mobile')) {
 					this.$util.msg("请输入有效手机号码")
+					return 
 				} else if (!this.$util.checkStr(this.code, 'mobileCode')) { //判断验证码是否填写
 					this.$util.msg("验证码输入错误")
-				} else if (this.agreement) { //判断 安全协议是否开启
+					return 
+				} else if (!this.agreement) { //判断 安全协议是否开启
 					this.$util.msg("请阅读并同意用户服务及隐私协议")
+					return 
 				}
 				// loading开启加载
 				this.loading = true

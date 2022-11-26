@@ -40,7 +40,6 @@
 				if (!this.mobile) {
 					this.$util.msg("请输入手机号码")
 					return
-					this.$util.checkStr
 				} else if (!this.$util.checkStr(this.mobile,'mobile')) { // 判断手机号是否格式正确 
 					this.$util.msg("手机号码格式不正确")
 					return

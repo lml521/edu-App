@@ -10,6 +10,9 @@ const store = new Vuex.Store({
 		accessToken: uni.getStorageSync(TOKEN_KEY) || ""
 	},
 	getters: {
+		hasLogin(state){
+			return !!state.accessToken
+		}
 
 	},
 	mutations: {
