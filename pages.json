@@ -75,6 +75,7 @@
 
 		},
 		{
+			// 阅读
 			"path": "pages/read/read",
 			"style": {
 				"navigationBarTitleText": "阅读",
@@ -139,16 +140,47 @@
 			"path": "pages/course/course-play",
 			"style": {
 				"app-plus": {
-					"titleNView": false// 导航栏  返回按钮 隐藏
+					"titleNView": false // 导航栏  返回按钮 隐藏
+				}
+			}
+
+		}, {
+			"path": "pages/order/confirm-buy",
+			"style": {
+				"navigationBarTitleText": "确认购买",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/auth/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				// 自定义导航栏
+				"navigationStyle": "custom",
+				"app-plus": {
+					// 从下往上
+					"animationType": "slide-in-bottom",
+					// 页面回弹效果
+					"bounce": "none"
 				}
 			}
 
 		}
+
 	    ,{
-            "path" : "pages/order/confirm-buy",
+            "path" : "pages/public/xieyi",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "确认购买",
+                "navigationBarTitleText": "用户服务协议",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/public/yinsi",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "隐私权政策",
                 "enablePullDownRefresh": false
             }
             
