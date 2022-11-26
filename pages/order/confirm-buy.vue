@@ -4,7 +4,10 @@
 		<!-- 商品信息 -->
 		<view class="commodityInformation">
 			<view class="">商品信息</view>
-			<courseItem></courseItem>
+			<view v-if="course&& course.list&&course.list.length>0">
+				<courseItem :item="item" v-for="(item,index) in course.list" :key="index"></courseItem>
+			</view>
+			<courseItem :item="course" v-else></courseItem>
 		</view>
 		<!-- 支付方式 -->
 		<view class="card payBox">
@@ -47,23 +50,39 @@
 		<view class="card price">
 			<view class="space-between center">
 				<text>商品金额</text>
-				<text>￥589.75</text>
+				<text v-if="course&& course.list&&course.list.length>0">￥{{course.totalPrice}}</text>
+				<text v-else>￥{{course.priceOriginal}}</text>
 			</view>
 			<view class="space-between center">
 				<text>优惠价</text>
-				<text>￥127.56</text>
+				<text v-if="course&& course.list&&course.list.length>0">￥{{course.groupPrice}}</text>
+				<text v-else>￥{{course.priceDiscount}}</text>
 			</view>
 		</view>
 
-
+		<view style="height: 150rpx;"></view>
 		<!-- 尾部 订单 -->
 		<view class="footer space-between center">
 			<view class="payment">
 				<text>实付金额：</text>
-				<text>127.56</text>
+				<text v-if="course&& course.list&&course.list.length>0">￥{{course.groupPrice}}</text>
+				<text v-else>￥{{course.priceDiscount}}</text>
 			</view>
-			<view class="payBtn center">立即支付</view>
+			<view>
+				<!-- 在ios上 显示 充值并支付 -->
+				<button class="payBtn center" v-if="isIos" @click="iosPayHandler">充值并支付</button>
 
+				<!-- H5   支付宝-->
+				<!-- #ifndef MP-WEIXIN -->
+				<button class="payBtn center" :loading="loading" :disabled="loading" v-else
+					@click="payHandler">提交订单</button>
+				<!-- #endif -->
+
+				<!-- 微信上面展示 -->
+				<!-- #ifdef MP-WEIXIN -->
+				<button class="payBtn center" v-else @click="wxPayHandler">提交订单</button>
+				<!-- #endif -->
+			</view>
 
 		</view>
 	</view>
@@ -74,17 +93,51 @@
 	export default {
 		data() {
 			return {
-				isIos: false,//判断 是否是在 ios平台 
-				provider : 'alipay',//默认是那种支付
+				course: {}, //传递过来的数据 
+				isIos: false, //判断 是否是在 ios平台 
+				provider: 'alipay', //默认是那种支付
+				loading: false, //loading加载
 			};
 		},
 		components: {
 			courseItem,
 		},
-		created() {
+		onLoad(options) {
+			// 不是微信 
+
+			// #ifndef MP-WEIXIN
+			if (options.course) {
+				const course = decodeURIComponent(options.course.replace(/%/g, '%25'))
+				this.course = JSON.parse(course)
+			}
+
+			if (options.groupList) {
+				const course = decodeURIComponent(options.groupList.replace(/%/g, '%25'))
+				this.course = JSON.parse(course)
+			}
+			// #endif
+
+			// 微信 
+			// #ifdef MP-WEIXIN
+			if (options.course) {
+				const course = decodeURIComponent(options.course)
+				this.course = JSON.parse(course)
+			}
+			if (options.groupList) {
+				const course = decodeURIComponent(options.groupList)
+				this.course = JSON.parse(course)
+			}
+			// #endif
+
+			console.log(this.course)
+
 			// 在app端 ios 与安卓布局不同 
 			// #ifdef APP-PLUS
 			this.getIsIos()
+			// #endif
+			// 判断是否 是在微信 则默认使用 微信支付
+			// #ifdef MP-WEIXIN
+			this.checkIsWx()
 			// #endif
 		},
 		methods: {
@@ -94,11 +147,30 @@
 				console.log(this.isIos)
 			},
 			// 切换 支付方式 
-			handelPayChanger(e){
+			handelPayChanger(e) {
 				console.log(e.detail.value)
-				
-			}
+			},
+			// 当小程序的时候 默认用微信支付
+			checkIsWx() {
+				provider: 'wxpay'
+			},
 
+			// ios上触发 提交 
+			iosPayHandler() {
+				console.log('ios')
+			},
+			// H5 触发
+			payHandler() {
+				this.loading = true
+				console.log('H5')
+				setTimeout(() => {
+					this.loading = false
+				}, 3000)
+			},
+			// 微信上触发 
+			wxPayHandler() {
+				console.log('微信')
+			},
 		}
 	}
 </script>
@@ -159,7 +231,6 @@
 
 		>view {
 			height: 90rpx;
-
 		}
 	}
 
@@ -186,7 +257,7 @@
 			background-color: $uni-color-primary;
 			color: $uni-bg-color;
 			border-radius: 40rpx;
-			width: 220rpx;
+			width: 260rpx;
 		}
 	}
 

@@ -12,7 +12,7 @@
 
 				<text v-if="item.groupPrice">￥{{item.groupPrice}}</text>
 				<text :class="{s:item.groupPrice}">￥{{item.totalPrice}}</text>
-				<text class="purchase" @click="handleToConfirmBuy">购买套餐</text>
+				<text class="purchase" @click="handleToConfirmBuy(item)">购买套餐</text>
 
 			</view>
 		</view>
@@ -90,10 +90,10 @@
 			};
 		},
 		methods: {
-			handleToConfirmBuy() {
+			handleToConfirmBuy(item) {
 				// encodeURIComponent   将特殊字符编码
 				// decodeURIComponent   将特殊字符进行解码
-				this.navTo("/pages/order/confirm-buy?groupList=" + encodeURIComponent(JSON.stringify(this.groupList)))
+				this.navTo("/pages/order/confirm-buy?groupList=" + encodeURIComponent(JSON.stringify(item)))
 			}
 		}
 	}

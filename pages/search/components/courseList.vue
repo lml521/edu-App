@@ -51,12 +51,7 @@
 				default: '',
 			},
 		},
-			mounted() {
-					this.params && Object.keys(this.searchData).forEach(key=>{
-						this.searchData[key] = this.params[key] || null
-					})
-					console.log(this.searchData,"search")
-				},
+			
 		data() {
 			return {
 				// 下拉菜单 数据 
@@ -95,6 +90,7 @@
 			},
 			// 上拉加载 回调
 			async upCallback(page) {
+				console.log(9876)
 				this.searchData.content = this.content && this.content.trim() || ""
 				this.searchData.current = page.num
 				this.searchData.size = page.size

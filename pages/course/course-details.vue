@@ -1,6 +1,7 @@
 <template>
 	<!-- 详情页面 -->
 	<view v-cloak>
+	{{isBuy}}{{courseData.isFree}}	{{isBuy ||courseData.isFree?'立即观看':'立即购买'}}
 		<courseHeader :item="courseData"></courseHeader>
 		<view class="course-details" :style="{height : pageHeight + 'px'}">
 			<tabBar :tabs="list" v-model="index"></tabBar>
@@ -24,7 +25,8 @@
 			</swiper>
 		</view>
 		<view class="BuyNow">
-			<button class="button" @click="purchasePlay">{{isBuy ||courseData.isFree?'立即观看':'立即购买'}}</button>
+			<button class="button" @click="purchasePlay">
+			{{isBuy ||courseData.isFree===1?'立即观看':'立即购买'}}</button>
 		</view>
 
 		<!-- 遮罩 视频 播放 -->
@@ -138,7 +140,7 @@
 					// 跳转视频播放页面
 					this.navTo('/pages/course/course-play')
 				}else{
-					// 跳转确认购买页this.navTo(`/pages/order/confirm-buy?course=`+encodeURIComponent(JSON.stringify(this.course)) )
+					// 跳转确认购买页
 					this.navTo(`/pages/order/confirm-buy?course=`+encodeURIComponent(JSON.stringify(this.courseData)))
 				}
 			},

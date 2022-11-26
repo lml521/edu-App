@@ -7,13 +7,14 @@
 				第{{index+1}}章 {{item.name}}
 			</h3>
 			<view class="item-content" :class="{active:activeObject.i==i&&activeObject.index==index}"
-			 v-for="(e,i) in item.sectionList" @click="handlePlayVideo(e,index,i)">
+			 v-for="(e,i) in item.sectionList" 
+			 @click="handlePlayVideo(e,index,i)">
 
 				<i class="iconfont icon-roundrightfill"></i>
 				<span>{{index+1}}-{{i+1}}</span>
 				<span>{{e.name}}</span>
-
-				<text class="trysee" v-if="!isBuy && e.isFree===0">试看</text>
+				<text class="trysee" v-if="!isBuy&&e.isFree===0">试看</text>
+			
 			</view>
 
 		</view>
@@ -89,7 +90,7 @@
 			// 点击 一项 判断 是否 免费  或者是否 已经购买 
 			// 如果免费或者是已经购买 打开音频  否则提示 请先购买
 			handlePlayVideo(data,index,i) {
-				if (data.isFree || this.isBuy) {
+				if (!data.isFree || this.isBuy) {
 					this.$emit('handlePlayVideo', data,index,i)
 				} else {
 					this.$util.msg('请先购买')

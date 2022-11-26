@@ -1,7 +1,7 @@
 <template>
-	<!--文章-->
+
 	<view v-show="i === index">
-		<!-- 下拉筛选组件 -->
+		
 		<downBar @search="search" :params="params" ></downBar>
 		<mescroll-body 
 		:ref="'mescrollRef'+i" 
@@ -16,6 +16,7 @@
 
 	</view>
 </template>
+
 
 <script>
 	import downBar from '@/components/common/down-bar.vue'; //下拉赛选 导航组件实现
@@ -87,6 +88,7 @@
 			},
 			// 上拉加载 回调
 			async upCallback(page) {
+				console.log(1234)
 					let res = await indexApi.getArticleList(this.searchData)
 					const list = res.data.records
 					if(page.num==1){
@@ -98,10 +100,10 @@
 				    this.mescroll.endBySize(this.articleList.length,res.data.total)
 				
 			}
-		}
 	}
-</script>
+	}
 
+</script>
 <style lang="scss">
 	.mescroll-body {
 		min-height: 1087rpx !important;
