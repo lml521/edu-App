@@ -11,17 +11,17 @@
 		<view class="input-content">
 			<view class="item">
 				<view>手机号码</view>
-				<input type="number" placeholder="请输入手机号码" placeholder-class="#b8b6bc">
+				<input type="number" placeholder="请输入手机号码" v-model="mobile" placeholder-class="#b8b6bc" maxlength="11">
 			</view>
 			<view class="item">
 				<view>验证码</view>
 				<view class="row">
-					<input type="text" placeholder="请输入验证码" placeholder-class="#b8b6bc">
-						<!-- 验证码 -->
-						<authCode style="margin-right: 30rpx;"></authCode>
+					<input type="text" v-model="code" placeholder="请输入验证码" placeholder-class="#b8b6bc" maxlength="6">
+					<!-- 验证码 -->
+					<authCode style="margin-right: 30rpx;" :mobile="mobile" :templateCode="templateCode"></authCode>
 				</view>
 			</view>
-			<button class="loginBtn">登录</button>
+			<button class="loginBtn" @click="handelLogin" :loading="loading">登录</button>
 
 		</view>
 		<!-- #ifdef APP-PLUS || MP-WEIXIN -->
@@ -50,14 +50,19 @@
 </template>
 
 <script>
-	import 	authCode from '@/components/authCode/authCode.vue'
+	import authCode from '@/components/authCode/authCode.vue' //验证码
+	import systemApi from '@/api/system.js'
 	export default {
-		components:{
+		components: {
 			authCode
 		},
 		data() {
 			return {
-				agreement: false
+				agreement: false, //协议开关
+				mobile: "", //手机号码
+				code: "", //验证码
+				loading: false, // loading加载
+				templateCode: 'MSM_1999123123', // 短信模版
 			}
 		},
 		methods: {
@@ -70,9 +75,51 @@
 			toProviderLogin(provider) {
 				console.log(provider)
 			},
+			// 登录 
+			async handelLogin() {
+				// 检验手机号码是否有效 
+				if (!this.$util.checkStr(this.mobile, 'mobile')) {
+					this.$util.msg("请输入有效手机号码")
+				} else if (!this.$util.checkStr(this.code, 'mobileCode')) { //判断验证码是否填写
+					this.$util.msg("验证码输入错误")
+				} else if (this.agreement) { //判断 安全协议是否开启
+					this.$util.msg("请阅读并同意用户服务及隐私协议")
+				}
+				// loading开启加载
+				this.loading = true
+				uni.showLoading({
+					title: '登录中',
+					mask: true
+				})
+
+				try {
+					let data = {
+						mobile: this.mobile,
+						code: this.code,
+					}
+					let res = await systemApi.getLogin(data)
+					if (res.code == 20000) {
+						// 登录成功之后调用当前方法将用户信息以及token存储到vuex
+						this.setToken(res.data)
+						this.loading = false
+						uni.hideLoading()
+					}
+				} catch (e) {
+					console.log(e)
+				}
+			},
+			// 存储token 以及userInfo
+			setToken(data) {
+				this.$store.commit("setToken", data)
+				setTimeout(()=>{
+					this.navBack()
+				},500)
+				
+			}
+
+
 
 		}
-
 	}
 </script>
 
@@ -92,7 +139,7 @@
 			}
 
 			.loginIcon {
-				font-size: 120rpx;
+				font-size: 130rpx;
 				color: #f8f8f8;
 			}
 
@@ -110,10 +157,10 @@
 			padding: 0 30rpx;
 
 			.item {
-				
-				
-				
-				
+
+
+
+
 				font-size: 26rpx;
 				color: #606266;
 				border-radius: 8rpx;
@@ -142,24 +189,16 @@
 				}
 
 				input {
-					flex: 1;
+					// flex: 1;
 					height: 60rpx;
 					font-size: 30rpx;
 					color: #303133;
 					width: 100%;
 				}
 
-
-
-
-
-
-
-
 				.btn {
 					height: 60rpx;
 					font-size: 20rpx;
-
 				}
 			}
 
