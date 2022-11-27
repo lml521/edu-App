@@ -9,7 +9,7 @@ export default {
 		// 跳转 
 		navTo(url,options={}){
 			if(!url) return 
-			if(options.login){
+			if(options.login&& !this.$store.getters.hasLogin){
 				uni.navigateTo({
 					url:"/pages/auth/login"
 				})

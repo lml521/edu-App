@@ -18,7 +18,7 @@
 		</view>
 	
 	<!-- 我的订单 -->
-	<userList></userList>
+	<userList :list="list"></userList>
 	
 	
 	</view>
@@ -26,14 +26,16 @@
 
 <script>
 	import {mapState,mapGetters} from "vuex";
-	import userList from '@/pages/user/components/userList.vue'
+		import userList from '@/pages/user/components/userList.vue'
+	
+		import list from '@/config/my-list-bar.js'
 	export default {
 		components:{
 			userList,
 		},
 		data() {
 			return {
-
+		list:list()
 			};
 		},
 		computed: {

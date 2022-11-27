@@ -1,36 +1,63 @@
 <template>
+	<!-- 封装 -->
 	<view class="list-box">
-		<view class="list">
-			<view class="list-item space-between center" hover-class="active" :hover-stay-time="50">
+
+		<view class="list" v-for="(item,index) in list " :key="index">
+			<view class="list-item space-between center" hover-class="active" :hover-stay-time="50"
+				v-for="(ele,i) in item" @click="handleClickItem(ele)">
 				<view class="left center">
-					<text class="iconfont mxg-icon-host-color"></text>
-					<view class="title">我的订单</view>
+					<text v-if="ele.icon" :class="ele.icon"></text>
+					<view class="title">{{ele.title}}</view>
 				</view>
 				<view class="right center">
-					<!-- 右侧图标 -->
-					<text class="iconfont icon-right"></text>
+
+					<img v-if="ele.src" :src="ele.src" alt="">
+
+					<text v-if="ele.text">{{ele.text}}</text>
+
+					<text v-if="ele.rightIcon" class="iconfont icon-right"></text>
+
+					<switch v-if="ele.checked||ele.checked==false" :checked="ele.checked" />
+
 				</view>
 			</view>
-	<view class="list-item space-between center" hover-class="active" :hover-stay-time="50">
-		<view class="left center">
-			<text class="iconfont mxg-icon-lock-color"></text>
-			<view class="title">我的余额</view>
-		</view>
-		<view class="right center">
-			<!-- 右侧图标 -->
-			<text class="iconfont icon-right"></text>
 		</view>
 	</view>
-		</view>
+	</view>
+
+
 	</view>
 </template>
 
 <script>
 	export default {
+		props: {
+			// 传递过来的展示 数据
+			list: {
+				type: Array,
+				default: () => []
+			}
+		},
 		data() {
 			return {
 
 			};
+
+		},
+		methods: {
+			handleClickItem(item) {
+				console.log(item)
+				// 判断点击是否要跳转页面新的页面
+				if (item.page) {
+					this.navTo(item.page, {
+						login: item.login
+					})
+
+				} else if (item.event) { // 判断点击是否有事件操作 
+					this.$emit(item.event, item)
+				}
+
+			}
 		}
 	}
 </script>
@@ -63,7 +90,10 @@
 						margin-left: 15rpx;
 					}
 
+
 					image {
+
+					img {
 						width: 120rpx;
 						height: 120rpx;
 						border-radius: 60px;
@@ -80,5 +110,6 @@
 				background-color: #fafafa;
 			}
 		}
+	}
 	}
 </style>

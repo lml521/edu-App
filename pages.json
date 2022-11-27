@@ -204,6 +204,41 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/user/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/order/order",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的订单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/order/my-balance",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的余额",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/study",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的学习",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {
