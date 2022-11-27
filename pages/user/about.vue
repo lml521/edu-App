@@ -1,7 +1,6 @@
 <template>
 	<!-- 关于梦学谷 -->
 	<view>
-
 		<view class="column center">
 			<!-- widthFix 高度自动变化 -->
 			<image class="logo" src="/static/images/logo-black.png" lazy-load mode="widthFix"></image>

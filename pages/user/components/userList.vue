@@ -91,14 +91,13 @@
 					}
 
 
-					image {
+					
 
 					img {
-						width: 120rpx;
+						width: 120rpx ;
 						height: 120rpx;
 						border-radius: 60px;
 
-					}
 
 					switch {
 						margin-right: -10rpx;

@@ -200,7 +200,7 @@
             "path" : "pages/user/userDetails",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "个人资料",
                 "enablePullDownRefresh": false
             }
             
