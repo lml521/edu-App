@@ -240,6 +240,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/user/feedback",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "意见反馈",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/about",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "关于梦学谷",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

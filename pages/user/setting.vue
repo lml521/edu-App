@@ -24,21 +24,31 @@ import list from '@/config/setting-list-bar.js'//展示数据
 			};
 		},
 		methods:{
+			
+			fn(data,key){
+				let checked=!data.checked
+				this.$set(data,'checked',checked)
+				uni.setStorageSync(key,checked)
+			},
+			
 			// 允许非WIFI网络播放
-			setWifiPlay(){
-				console.log('允许非WIFI网络播放')
+			setWifiPlay(data){
+				console.log('允许非WIFI网络播放',data)
+				this.fn(data,'wifi-play')
 			},
 			// 允许非WIFI网络缓存
-			setWifiDownload(){
+			setWifiDownload(data){
 				console.log('允许非WIFI网络缓存')
+				this.fn(data,'wifi-download')
 			},
 			// 视频自动连续播放
-			setAutoPlay(){
+			setAutoPlay(data){
 				console.log('视频自动连续播放')
+				this.fn(data,'auto-play')
 			},
 			// 视频自动连续播放
 			clearStorage(obj){
-				console.log('视频自动连续播放',obj)
+
 				uni.showModal({
 					title: '您确定清除应用缓存吗?',
 						content: '(该操作不会删除缓存课程)',
