@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+		我的订单
 	</view>
 </template>
 
@@ -10,7 +10,11 @@
 			return {
 				
 			};
-		}
+		},
+		// 页面鉴权
+		onLoad() {
+			this.toPage()
+		},
 	}
 </script>
 

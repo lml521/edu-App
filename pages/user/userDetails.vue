@@ -9,6 +9,7 @@
 <script>
 	import userList from '@/pages/user/components/userList.vue'
 	import list from '@/config/user-list-bar.js'
+	import systemApi from '@/api/system.js'
 	export default {
 		components: {
 			userList
@@ -19,16 +20,33 @@
 				list: list()
 			};
 		},
+		onLoad() {
+			this.toPage()
+		},
+		onShow() {
+			this.list=list()
+		},
 		methods: {
 			logout() {
 				uni.showModal({
 					title: '确定退出登录?',
 					content: '退出后不会删除任何历史数据',
-					success:(res)=>{
+					success: async (res) => {
 						if (res.confirm) {
-							console.log('用户点击确定');
-							this.$store.commit("logout")
-							this.navBack()
+							try {
+								let {code} = await systemApi.getLogout(this.$store.state.accessToken)
+								if (code == 20000) {
+									this.$store.commit("logout")
+									setTimeout(() => {
+										this.navBack()
+									}, 300)
+								}
+
+
+							} catch (e) {
+								console.log(e)
+							}
+
 
 						} else if (res.cancel) {
 							console.log('用户点击取消');

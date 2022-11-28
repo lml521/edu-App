@@ -28,9 +28,17 @@ const getLogin = (data) => {
 	})
 }
 
-
+// 退出登录 
+const getLogout=(accessToken)=>{
+	return request({
+		url:"/auth/logout",
+		data:{accessToken}
+	})
+	
+}
 
 export default {
 	getAuthCode,
-	getLogin
+	getLogin,
+	getLogout
 }

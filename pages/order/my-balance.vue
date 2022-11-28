@@ -10,7 +10,11 @@
 			return {
 				
 			};
-		}
+		},
+		// 页面鉴权
+		onLoad() {
+			this.toPage()
+		},
 	}
 </script>
 
