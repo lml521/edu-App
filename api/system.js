@@ -34,11 +34,17 @@ const getLogout=(accessToken)=>{
 		url:"/auth/logout",
 		data:{accessToken}
 	})
-	
 }
+
+// 修改用户信息
+const updateUserInfo=(data)=>{
+	 return request({url : '/system/user', method : 'PUT', data})
+}
+
 
 export default {
 	getAuthCode,
 	getLogin,
-	getLogout
+	getLogout,
+	updateUserInfo
 }

@@ -33,10 +33,7 @@ export default {
 				this.navTo("/pages/auth/login")
 			}
 		},
-		
-		
-		
-		
+	
 		
 		handelSetSearch(item){
 			if(item){
