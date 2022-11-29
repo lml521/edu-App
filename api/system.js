@@ -41,10 +41,20 @@ const updateUserInfo=(data)=>{
 	 return request({url : '/system/user', method : 'PUT', data})
 }
 
+// 修改手机号码
+const updateMobile=(data)=>{
+	 return request({url : '/auth/user/mobile', method : 'PUT', data})
+}
 
+// 意见反馈
+const sendFeedBack = (data) => {
+	return request({url : '/system/api/feedback', method : 'POST', data})
+}
 export default {
 	getAuthCode,
 	getLogin,
 	getLogout,
-	updateUserInfo
+	updateUserInfo,
+	updateMobile,
+	sendFeedBack
 }

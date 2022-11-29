@@ -130,6 +130,7 @@
 			// 修改手机号码
 			editMobile() {
 				console.log("修改手机号码")
+				this.navTo("/pages/auth/bind-mobile")
 			},
 			// 修改昵称 
 			editName(data) {

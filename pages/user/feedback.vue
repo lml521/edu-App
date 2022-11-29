@@ -3,7 +3,7 @@
 	<view class="feed-back">
 		<radio-group>
 			<label v-for="(item,index) in items" :key="index">
-				<radio :value="item.value" :checked="item.value === current" style="transform: scale(.7);" />
+				<radio :value="item.value" :checked="item.value == current" style="transform: scale(.7);" />
 				<text>{{item.name}}</text>
 			</label>
 		</radio-group>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import systemApi from '@/api/system.js'
 	export default {
 		data() {
 			return {
@@ -26,7 +27,7 @@
 					weixin: "",
 				},
 
-				current: "1",
+				current: 1,
 				items: [{
 						value: "1",
 						name: "内容意见",
@@ -44,12 +45,61 @@
 			}
 		},
 		methods: {
+
 			radioChange(e) {
 				console.log("e==>", e);
 			},
-			submitHandler() {
+			async submitHandler() {
+				let data = {
+					...this.formData,
+					type: this.current
+				}
 
-				console.log(this.formData)
+				console.log(data)
+				// 校验反馈的内容不能少于10个字符
+				if (data.content.length < 10) {
+					this.$util.msg("反馈内容至少输入10个字符")
+					return
+				}
+
+				// 校验qq号格式是否正确 //QQ号 4到9个数字
+				if (!this.$util.checkStr(data.qq, 'QQ')) {
+					this.$util.msg("您输入qq号格式不正确")
+					return
+				}
+				// 校验微信号格式是否正确  //微信号5到19字母
+				if (!this.$util.checkStr(data.weixin, 'weixin')) {
+					this.$util.msg("您输入微信号格式不正确")
+					return
+				}
+
+				try {
+					uni.showLoading({})
+					let res = await systemApi.sendFeedBack(data)
+					console.log(res)
+					if (res.code == 20000) {
+						uni.hideLoading()
+						uni.showModal({
+							content: '您的意见反馈成功',
+							showCancel: false,
+							success: (res) => {
+								console.log(1)
+								if (res.confirm) {
+									console.log(2)
+									this.navBack(1)
+								}
+							}
+						});
+					}
+
+				} catch (e) {
+					console.log(e)
+					//TODO handle the exception
+				}
+
+
+
+
 			},
 		}
 	}
