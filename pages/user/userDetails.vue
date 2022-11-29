@@ -4,11 +4,11 @@
 		<userList :list="list" @chooseImg="chooseImg" @editUsername="editUsername" @editMobile="editMobile"
 			@editName="editName" @chooseSex="chooseSex"></userList>
 		<button style="background-color: #fff;" @click="logout">退出</button>
-		
-		<view  v-if="isUpdate" class="nickname row">
+
+		<view v-if="isUpdate" class="nickname row">
 			<input type="text" v-model="nickname">
 			<text @click="ChangeName">修改</text>
-			
+
 		</view>
 	</view>
 </template>
@@ -29,8 +29,8 @@
 		data() {
 			return {
 				list: list(),
-				isUpdate:false,
-				nicknam:""
+				isUpdate: false,
+				nicknam: ""
 			};
 		},
 		computed: {
@@ -44,16 +44,16 @@
 		},
 		methods: {
 			// 返回按钮 
-			onBackPress(){
+			onBackPress() {
 				console.log(this.isUpdate)
-				if(this.isUpdate){
-					this.isUpdate=false
+				if (this.isUpdate) {
+					this.isUpdate = false
 					return true
 				}
 			},
-			
-			
-			
+
+
+
 			// 退出 
 			logout() {
 				uni.showModal({
@@ -62,7 +62,9 @@
 					success: async (res) => {
 						if (res.confirm) {
 							try {
-								let {code} = await systemApi.getLogout(this.$store.state.accessToken)
+								let {
+									code
+								} = await systemApi.getLogout(this.$store.state.accessToken)
 								if (code == 20000) {
 									this.$store.commit("logout")
 									setTimeout(() => {
@@ -132,23 +134,36 @@
 			// 修改昵称 
 			editName(data) {
 				console.log("修改昵称")
-				this.isUpdate=true 
-				this.nickname=data.text
+				this.isUpdate = true
+				this.nickname = data.text
 			},
 			// 提交修改姓名
-			ChangeName(){
+			ChangeName() {
 				console.log(this.nickname)
-				this.userInfo.nickName=this.nickname
+				this.userInfo.nickName = this.nickname
 				this.$store.commit("setToken", {
 					userInfo: this.userInfo
 				});
-				this.list=list()
-				this.isUpdate=false 
+				this.list = list()
+				this.isUpdate = false
 			},
 			// 修改性别
 			chooseSex() {
 				console.log("修改性别")
-				
+				uni.showActionSheet({
+					itemList: ['男', '女'],
+					success: (res)=>{
+						console.log(res.tapIndex);
+						this.userInfo.sex = res.tapIndex
+						this.$store.commit("setToken", {
+							userInfo: this.userInfo
+						});
+						this.list = list()
+					},
+					fail: function(res) {
+						console.log(res.errMsg);
+					}
+				});
 			}
 
 
@@ -157,32 +172,32 @@
 </script>
 
 <style lang="scss">
-.nickname {
-  position: fixed;
-  background-color: #fff;
-  left: 0;
-  right: 0;
-  top: var(--window-top);
-  bottom: 0;
-  z-index: 99;
+	.nickname {
+		position: fixed;
+		background-color: #fff;
+		left: 0;
+		right: 0;
+		top: var(--window-top);
+		bottom: 0;
+		z-index: 99;
 
-  input {
-    width: 650rpx;
-    height: 90rpx;
-    font-size: 35rpx;
-    padding: 0 20rpx;
-    background-color: #ffffff;
-    border: $i-underline;
-    margin: 0 10rpx;
-  }
+		input {
+			width: 650rpx;
+			height: 90rpx;
+			font-size: 35rpx;
+			padding: 0 20rpx;
+			background-color: #ffffff;
+			border: $i-underline;
+			margin: 0 10rpx;
+		}
 
-  text {
-    z-index: 100;
-    width: 100rpx;
-    height: 90rpx;
-    line-height: 90rpx;
-    text-align: center;
-    color: $text-color-blue;
-  }
-}
+		text {
+			z-index: 100;
+			width: 100rpx;
+			height: 90rpx;
+			line-height: 90rpx;
+			text-align: center;
+			color: $text-color-blue;
+		}
+	}
 </style>
