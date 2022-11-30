@@ -13,7 +13,6 @@
 				:index="tabIndex" 
 				:tabs="tabs" 
 				:height="height">
-
 				</mescroll-item>
 
 			</swiper-item>

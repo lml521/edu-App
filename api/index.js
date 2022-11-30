@@ -34,6 +34,9 @@ const getArticleList  =(data)=>{
 	})
 }
 
+// article/api/article/
+
+
 
 export default {
 	getBannerList,

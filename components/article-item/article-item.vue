@@ -1,5 +1,5 @@
 <template>
-	<view class="article-item">
+	<view class="article-item" @click="navTo(`/pages/article/details?id=${item.id}`)">
 		<view class="article-content row">
 			<view class="left-text column">
 				<text class="title text-ellipsis">
@@ -48,14 +48,9 @@
 			}
 		},
 		computed: {
-			updateDate() {
-				// return this.$util.dateFormat(this.item.updateDate,'YYYY年MM月DD日')
-			}
+			
 		},
-		mounted() {
-			// console.log("old time", this.item.updateDate)
-			// console.log("for", this.$util.dateFormat(this.item.updateDate))
-		}
+		
 	}
 </script>
 <style lang="scss">
