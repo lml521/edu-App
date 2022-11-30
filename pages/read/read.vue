@@ -10,7 +10,11 @@
 			return {
 				
 			};
-		}
+		},
+		onNavigationBarSearchInputClicked() {
+			this.navTo("/pages/search/search")
+		},
+		
 	}
 </script>
 
