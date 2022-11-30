@@ -6,7 +6,6 @@
 		
 		<mescroll-body 
 		:ref="'mescrollRef'+i" 
-		@init="mescrollInit" 
 		@down="downCallback" 
 		@up="upCallback"
 		:down="downOption" 

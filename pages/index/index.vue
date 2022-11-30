@@ -9,7 +9,6 @@
 		<Banner :bannerList="bannerList"></Banner>
 		<mescroll-body 
 		ref="mescrollRef"
-		@init="mescrollInit" 
 		@down="downCallback" 
 		@up="upCallback" 
 		:down="downOption"

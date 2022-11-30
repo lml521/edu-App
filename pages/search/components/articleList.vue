@@ -5,7 +5,6 @@
 		<downBar @search="search" :params="params" ></downBar>
 		<mescroll-body 
 		:ref="'mescrollRef'+i" 
-		@init="mescrollInit" 
 		@down="downCallback" 
 		@up="upCallback"
 		:down="downOption" 
